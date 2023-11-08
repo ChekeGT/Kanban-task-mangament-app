@@ -25,7 +25,7 @@ function App() {
     
   }
   return (
-    <dispatchContext.Provider value={{dispatch:dispatch, state:state}}>
+    <dispatchContext.Provider value={dispatch}>
     </dispatchContext.Provider>
   )
 }
