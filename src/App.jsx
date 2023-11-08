@@ -13,7 +13,7 @@ import reducer from './state_management/reducer'
 const dispatchContext = createContext()
 
 // And we create this hook to make it user to use the dispatch function on the components.
-function useDispatch(){
+export function useDispatch(){
   return useContext(dispatchContext)
 }
 
