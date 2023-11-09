@@ -10,6 +10,10 @@ export default {
         grayText: '#828FA3',
         mainPurple: '#635FC7',
         mainRed: '#EA5555',
+        todoColor: '#49C4E5',
+        doingColor: '#8471F2',
+        doneColor: '#67E2AE',
+        lightWhite: '#E9EFFA'
       },
       fontFamily: {
         custom: ['Plus Jakarta Sans', 'serif']
