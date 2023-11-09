@@ -6,7 +6,7 @@ import { createContext, useContext, useReducer } from 'react'
 
 // We handle the reducer on other file to simplify the app component.
 import reducer from './state_management/reducer'
-
+import AddTask from './components/AddTask'
 
 // We need a context for dispatch because we will use it on deeply nested components
 // Therefore it will be easier using it with context
@@ -26,6 +26,7 @@ function App() {
   }
   return (
     <dispatchContext.Provider value={dispatch}>
+      <AddTask/>
     </dispatchContext.Provider>
   )
 }
