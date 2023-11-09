@@ -10,6 +10,7 @@ export default {
         grayText: '#828FA3',
         mainPurple: '#635FC7',
         mainRed: '#EA5555',
+        grayBackground: '#f4f7fd'
       },
       fontFamily: {
         custom: ['Plus Jakarta Sans', 'serif']
