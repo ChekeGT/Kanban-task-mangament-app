@@ -1,6 +1,9 @@
 // Styles
 import './index.css'
 
+// Themes
+import { THEMES } from './state_management/themes'
+
 // Data to test the components
 import data from './data/data.json'
 
@@ -28,6 +31,15 @@ function App() {
 
   function loadStateFromLocalStorage(){
     
+    if (localStorage.state == undefined){
+      localStorage.state = JSON.stringify({
+        boards: [],
+        currentBoard: null,
+        theme: THEMES.light
+      })
+    }
+    let state = JSON.parse(localStorage.state)
+    return state
   }
   return (
     <dispatchContext.Provider value={dispatch}>
