@@ -8,10 +8,10 @@ import CreateNewBoardButton from "./CreateNewBoardButton.jsx"
 
 export default function NavBar({boards, theme}){
     return(
-        <header>
-            <nav className=" flex flex-col min-h-screen justify-between bg-white shadow w-2/12 px-3 py-2 font-custom" >
+        <header className='w-2/12'>
+            <nav className=" flex flex-col min-h-screen justify-between bg-white shadow w-full px-3 py-2 font-custom" >
                 <div className="flex flex-col gap-4 w-full mt-2 ml-3">
-                    <img className="w-[152.53px] h-[25.22px]" src="./src/assets/logo-dark.svg"></img>
+                    <img className="w-[152.53px] h-[25.22px] mb-7" src="./src/assets/logo-dark.svg"></img>
                     <div className="flex flex-col gap-3">
                         <p className=" text-xl text-grayText font-extrabold">All boards ({boards.length})</p>
                         {boards.map((board) => {

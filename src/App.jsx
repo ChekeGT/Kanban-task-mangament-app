@@ -1,6 +1,9 @@
 // Styles
 import './index.css'
 
+// Data to test the components
+import data from './data/data.json'
+
 // REACT STUFF
 import { createContext, useContext, useReducer } from 'react'
 
@@ -10,6 +13,8 @@ import AddTask from './components/AddTask'
 import BoardTable from './components/BoardTable'
 import Task from './components/Task'
 import ColumnTask from './components/ColumnTasks'
+import BoardBar from './components/BoardBar/BoardBar'
+import NavBar from './components/NavBar/NavBar'
 
 // We need a context for dispatch because we will use it on deeply nested components
 // Therefore it will be easier using it with context
@@ -29,7 +34,12 @@ function App() {
   }
   return (
     <dispatchContext.Provider value={dispatch}>
-      <BoardTable/>
+      <div className='flex flex-row w-full'>
+        <NavBar boards={data.boards}/>
+        <div className='w-full'>
+          <BoardBar name={data.boards[0].name}/>
+        </div>
+      </div>
     </dispatchContext.Provider>
   )
 }
