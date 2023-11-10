@@ -9,10 +9,7 @@ import { createContext, useContext, useReducer } from 'react'
 
 // We handle the reducer on other file to simplify the app component.
 import reducer from './state_management/reducer'
-import AddTask from './components/AddTask'
-import BoardTable from './components/BoardTable'
-import Task from './components/Task'
-import ColumnTask from './components/ColumnTasks'
+import BoardTable from './components/BoardTable/BoardTable'
 import BoardBar from './components/BoardBar/BoardBar'
 import NavBar from './components/NavBar/NavBar'
 
@@ -38,6 +35,7 @@ function App() {
         <NavBar boards={data.boards}/>
         <div className='w-full'>
           <BoardBar name={data.boards[0].name}/>
+          <BoardTable/>
         </div>
       </div>
     </dispatchContext.Provider>
