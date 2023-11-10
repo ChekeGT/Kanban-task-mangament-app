@@ -83,9 +83,3 @@ input + .slider {
 input + .slider {
   box-shadow: 0 0 1px #635FC7;
 }
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(20px);
-  -ms-transform: translateX(20px);
-  transform: translateX(20px);
-}

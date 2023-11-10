@@ -8,7 +8,7 @@ import { THEMES } from './state_management/themes'
 import data from './data/data.json'
 
 // REACT STUFF
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useEffect, useReducer } from 'react'
 
 // We handle the reducer on other file to simplify the app component.
 import reducer from './state_management/reducer'
@@ -41,6 +41,11 @@ function App() {
     let state = JSON.parse(localStorage.state)
     return state
   }
+  useEffect(() => {
+    if (state.theme == THEMES.dark){
+      document.documentElement.classList.add('dark')
+    }
+  },[])
   return (
     <dispatchContext.Provider value={dispatch}>
       <div className='flex flex-row w-full'>

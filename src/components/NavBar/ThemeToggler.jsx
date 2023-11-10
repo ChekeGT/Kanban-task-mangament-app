@@ -35,7 +35,7 @@ export default function ThemeToggler({theme}){
             <img className=" w-[18px] h-[18px]" src="./src/assets/icon-light-theme.svg"/>
             <label className="switch">
                 <input className="toggle"  type="checkbox" onChange={handleToggle} value={checked} />
-                <span className="slider rounded-full before:rounded-full"></span>
+                <span className={`slider rounded-full before:rounded-full ${checked ? 'before:translate-x-5' : ''}`}></span>
             </label>
             <img className=" w-[18px] h-[18px]" src="./src/assets/icon-dark-theme.svg"/>
         </div>
