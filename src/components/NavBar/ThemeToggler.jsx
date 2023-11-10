@@ -12,7 +12,7 @@ export default function ThemeToggler({theme}){
     }
 
     return (
-        <div className="flex flex-row w-full justify-evenly mx-auto bg-grayBackground items-center py-2">
+        <div className="flex flex-row w-full justify-evenly mx-auto bg-grayBackground items-center py-2 rounded-md dark:bg-veryDarkGrey">
             <img className=" w-[18px] h-[18px]" src="./src/assets/icon-light-theme.svg"/>
             <label className="switch">
                 <input className="toggle"  type="checkbox" onChange={handleToggle} />

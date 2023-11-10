@@ -14,12 +14,16 @@ export default {
         todoColor: '#49C4E5',
         doingColor: '#8471F2',
         doneColor: '#67E2AE',
-        lightWhite: '#E9EFFA'
+        lightWhite: '#E9EFFA',
+        veryDarkGrey: '#20212C',
+        darkGrey: '#2B2C37'
       },
       fontFamily: {
         custom: ['Plus Jakarta Sans', 'serif']
-      }
+      },
     },
+    darkSelector: '.dark-mode'
   },
+  darkMode: 'class',
   plugins: [],
 }
