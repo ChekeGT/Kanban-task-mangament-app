@@ -17,7 +17,7 @@ export default function NavBar({boards, theme, currentBoard}){
                         <p className=" text-xl text-grayText font-extrabold ml-4">All boards ({boards.length})</p>
                         {boards.map((board) => {
                             return (
-                                <BoardComponent key={board.name} name={board.name} currentBoard={board == currentBoard ? true : false}/>
+                                <BoardComponent key={board.name} board={board} currentBoard={board.name == currentBoard.name ? true : false}/>
                             )
                         })}
                         <CreateNewBoardButton/>
