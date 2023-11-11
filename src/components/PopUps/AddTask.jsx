@@ -1,9 +1,19 @@
 export default function AddTask() {
 
     const crossIcon = `./src/assets/icon-cross.svg`;
+
+    // This function is to keep the click only on the local scope of the component
+    //  Why? because this is important in order for the user to close the tab.
+    // Since this will be rendered on the popupcontainer. if the user clicks on the
+    // popup container it will close, but not if he clicks on the popup itself?
+    // why? because we have stop propagation :3
+
+    function preventPropagation(e){
+        e.stopPropagation()
+    }
     
     return(
-        <div className="w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
+        <div onClick={preventPropagation} className="w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl ">Add New Task</h1>
             <div className="flex flex-col gap-2">
                 <h3 className="font-bold text-grayText">Title</h3>

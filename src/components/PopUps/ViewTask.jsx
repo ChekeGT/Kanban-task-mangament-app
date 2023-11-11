@@ -1,9 +1,20 @@
 export default function ViewTask() {
     
     const optionIcon = `./src/assets/icon-vertical-ellipsis.svg`;
+
+
+    // This function is to keep the click only on the local scope of the component
+    //  Why? because this is important in order for the user to close the tab.
+    // Since this will be rendered on the popupcontainer. if the user clicks on the
+    // popup container it will close, but not if he clicks on the popup itself?
+    // why? because we have stop propagation :3
+
+    function preventPropagation(e){
+        e.stopPropagation()
+    }
     
     return(
-        <div className="flex flex-col gap-5 bg-white w-[480px] p-6">
+        <div  onClick={preventPropagation} className="flex flex-col gap-5 bg-white w-[480px] p-6">
             <div className="flex items-center">
                 <h1 className="font-bold text-xl">Research pricing points of various competitors and trial different business models</h1>
                 <img src={optionIcon} alt="" />
