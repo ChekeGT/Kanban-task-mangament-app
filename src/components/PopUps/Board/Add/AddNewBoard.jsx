@@ -80,7 +80,16 @@ export default function AddNewBoard() {
             <h1 className="dark:text-white font-bold text-xl ">Add New Board</h1>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Name</h3>
-                <input name="board-name" className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" placeholder="e.g. Web Design" type="text" value={boardName} onChange={handleBoardNameChange}/>
+                <div className="relative">
+                    <input name="board-name" className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${(submissionErrors && boardName == '') ? ' border-2 border-mainRed' : ''}`} placeholder="e.g. Web Design" type="text" value={boardName} onChange={handleBoardNameChange}/>
+                    {
+                        (submissionErrors && boardName == '') ?
+                        <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
+                            <p className=" text-mainRed text-sm">Can't Be Empty</p>
+                        </div>
+                        : ''
+                    }
+                </div>
             </div>
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white font-bold text-grayText">Columns</h3>
