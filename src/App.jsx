@@ -54,7 +54,6 @@ function App() {
         <div className='w-full'>
           <BoardBar name={data.boards[0].name}/>
           <BoardTable/>
-          <BoardTemplate/>
         </div>
       </div>
     </dispatchContext.Provider>
