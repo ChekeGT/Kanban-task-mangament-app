@@ -1,3 +1,5 @@
+import SubTask from "../BoardTable/SubTask";
+
 export default function ViewTask({title, }) {
     
     const optionIcon = `./src/assets/icon-vertical-ellipsis.svg`;
@@ -23,9 +25,8 @@ export default function ViewTask({title, }) {
             <div> 
                 <h3 className="dark:text-white">Subtasks (2 of 3)</h3>
                 {/* SUBTASK COMPONENT HERE */}
-                <div className="flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 ">
-                    <input className="" type="checkbox" />
-                    <p>Research competitor pricing and business models</p>
+                <div className="flex flex-col gap-2 pt-2">
+                    <SubTask/>
                 </div>
             </div>
             <div className="flex flex-col gap-4">
