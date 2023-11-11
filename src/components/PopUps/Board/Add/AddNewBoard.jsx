@@ -5,14 +5,18 @@ export default function AddNewBoard() {
 
     // We use an array of empy strings to represent the columns.
     // Each element of this array will reactively change to have the name of the column.
-    // [column name, key, 'boolean: errors during the submission of the form?']
-    const [columns, setColumns] = useState([['', 0, true]])
+    // [column name, key]
+    const [columns, setColumns] = useState([['', 0]])
 
     // Key column value is used to presereve the uniqueness of each key, this is just for requirement on react.
     const [keyColumnValue, setKeyColumnValue] = useState(1)
 
 
     const [boardName, setBoardName ] = useState('')
+
+    // Used to detect errors during the submission.
+    
+    const [submissionErrors, setSubmissionErrors ] = useState(false)
 
     const handleBoardNameChange = (e) => {
         setBoardName(e.target.value)
@@ -44,9 +48,32 @@ export default function AddNewBoard() {
         setKeyColumnValue(keyColumnValue + 1)
         setColumns(columnsCopy)
     }
+
+    const detectSubmissionErrors = (boardName, columns) => {
+        let errors = false
+        columns.forEach((column) => {
+            if (column[0] == ''){
+                errors = true
+            }
+        })
+        if (boardName == ''){
+            errors = true
+        }
+        return errors
+    }
+
+    const saveFormToStore = (boardName, columns) => {
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        if (detectSubmissionErrors(boardName, columns) == false){
+            saveFormToStore(boardName, columns)  
+        }else{
+            setSubmissionErrors(true)
+        }
+
     }
     return(
         <form onClick={preventPropagation} onSubmit={handleSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
@@ -58,7 +85,7 @@ export default function AddNewBoard() {
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white font-bold text-grayText">Columns</h3>
                 <div className="pb-6">
-                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} value={column[0]} setColumnValue={setColumnValue} deleteColumn={deleteColumn} submissionErrors={column[2]}/>)}
+                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} value={column[0]} setColumnValue={setColumnValue} deleteColumn={deleteColumn} submissionErrors={submissionErrors}/>)}
                 </div>
                 <div className="flex flex-col gap-4">
                     <button  onClick={addNewColumn} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Column</button>
