@@ -5,11 +5,11 @@ export default function BoardTable() {
     const content = false
 
     return(
-        <div className="flex gap-8">
+        <div className="flex gap-8 pt-4 pl-6">
             <ColumnTask/>
             <ColumnTask/>
             <ColumnTask/>
-            <div className="flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">
+            <div className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">
                 <h1>+ New Column</h1>
             </div>
         </div>
