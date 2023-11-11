@@ -15,6 +15,7 @@ import reducer from './state_management/reducer'
 import BoardTable from './components/BoardTable/BoardTable'
 import BoardBar from './components/BoardBar/BoardBar'
 import NavBar from './components/NavBar/NavBar'
+import BoardTemplate from './components/PopUps/BoardTemplate'
 
 // We need a context for dispatch because we will use it on deeply nested components
 // Therefore it will be easier using it with context
@@ -53,6 +54,7 @@ function App() {
         <div className='w-full'>
           <BoardBar name={data.boards[0].name}/>
           <BoardTable/>
+          <BoardTemplate/>
         </div>
       </div>
     </dispatchContext.Provider>
