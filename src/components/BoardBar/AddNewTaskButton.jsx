@@ -4,7 +4,7 @@ import { useState } from "react"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import AddTask from '../PopUps/AddTask'
 
-export default function AddNewTaskButton(){
+export default function AddNewTaskButton({board}){
 
     let [showPopUp, setShowPopUp ] = useState(false)
 
