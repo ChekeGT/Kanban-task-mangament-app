@@ -1,5 +1,6 @@
 import { useState } from "react"
 import ColumnInput from "./ColumnInput"
+import { useAutoDestruction } from "../../PopUpContainer"
 
 export default function AddNewBoard() {
 
@@ -17,6 +18,8 @@ export default function AddNewBoard() {
     // Used to detect errors during the submission.
     
     const [submissionErrors, setSubmissionErrors ] = useState(false)
+
+    const autoDestructionFunction = useAutoDestruction()
 
     const handleBoardNameChange = (e) => {
         setBoardName(e.target.value)
@@ -69,7 +72,8 @@ export default function AddNewBoard() {
         e.preventDefault()
 
         if (detectSubmissionErrors(boardName, columns) == false){
-            saveFormToStore(boardName, columns)  
+            saveFormToStore(boardName, columns)
+            autoDestructionFunction()
         }else{
             setSubmissionErrors(true)
         }
