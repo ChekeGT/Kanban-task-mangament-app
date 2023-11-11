@@ -20,9 +20,15 @@ import NavBar from './components/NavBar/NavBar'
 // Therefore it will be easier using it with context
 const dispatchContext = createContext()
 
+const boardsContext = createContext()
+
 // And we create this hook to make it user to use the dispatch function on the components.
 export function useDispatch(){
   return useContext(dispatchContext)
+}
+
+export function useBoardsContext(){
+  return useContext(boardsContext)
 }
 
 function App() {
@@ -48,13 +54,15 @@ function App() {
   },[])
   return (
     <dispatchContext.Provider value={dispatch}>
-      <div className='flex flex-row w-full'>
-        <NavBar boards={data.boards} theme={state.theme} currentBoard={state.currentBoard}/>
-        <div className='w-full dark:bg-veryDarkGrey'>
-          <BoardBar board={state.currentBoard}/>
-          <BoardTable/>
+      <boardsContext.Provider value={state.boards}>
+        <div className='flex flex-row w-full'>
+          <NavBar boards={state.boards} theme={state.theme} currentBoard={state.currentBoard}/>
+          <div className='w-full dark:bg-veryDarkGrey'>
+            <BoardBar board={state.currentBoard}/>
+            <BoardTable/>
+          </div>
         </div>
-      </div>
+      </boardsContext.Provider>
     </dispatchContext.Provider>
   )
 }

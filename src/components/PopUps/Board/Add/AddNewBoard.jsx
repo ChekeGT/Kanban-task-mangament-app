@@ -3,9 +3,10 @@ import ColumnInput from "./ColumnInput"
 
 // Context
 import { useAutoDestruction } from "../../PopUpContainer"
-import { useDispatch } from "../../../../App"
+import { useBoardsContext, useDispatch } from "../../../../App"
 
 import { ACTIONS } from "../../../../state_management/actions"
+import NameInput from "./NameInput"
 
 export default function AddNewBoard() {
 
@@ -25,6 +26,8 @@ export default function AddNewBoard() {
     const [submissionErrors, setSubmissionErrors ] = useState(false)
 
     const autoDestructionFunction = useAutoDestruction()
+
+    const boards = useBoardsContext()
     
     const dispatch = useDispatch()
 
@@ -59,6 +62,14 @@ export default function AddNewBoard() {
         setColumns(columnsCopy)
     }
 
+    const boardNameAlreadyUsed = (boardName) => {
+        for (let i = 0; i < boards.length; i++){
+            let board = boards[i]
+            if (board.name == boardName){
+                return true
+            }
+        }
+    }
     const detectSubmissionErrors = (boardName, columns) => {
         let errors = false
         columns.forEach((column) => {
@@ -67,6 +78,9 @@ export default function AddNewBoard() {
             }
         })
         if (boardName == ''){
+            errors = true
+        }
+        if (boardNameAlreadyUsed(boardName)){
             errors = true
         }
         return errors
@@ -111,16 +125,7 @@ export default function AddNewBoard() {
             <h1 className="dark:text-white font-bold text-xl ">Add New Board</h1>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Name</h3>
-                <div className="relative">
-                    <input name="board-name" className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${(submissionErrors && boardName == '') ? ' border-2 border-mainRed' : ''}`} placeholder="e.g. Web Design" type="text" value={boardName} onChange={handleBoardNameChange}/>
-                    {
-                        (submissionErrors && boardName == '') ?
-                        <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
-                            <p className=" text-mainRed text-sm">Can't Be Empty</p>
-                        </div>
-                        : ''
-                    }
-                </div>
+                <NameInput boardName={boardName} submissionErrors={submissionErrors} handleBoardNameChange={handleBoardNameChange} usedBoardName={boardNameAlreadyUsed(boardName)}/>
             </div>
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white font-bold text-grayText">Columns</h3>
