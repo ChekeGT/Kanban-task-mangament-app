@@ -1,6 +1,11 @@
 import { useState } from "react"
 import ColumnInput from "./ColumnInput"
+
+// Context
 import { useAutoDestruction } from "../../PopUpContainer"
+import { useDispatch } from "../../../../App"
+
+import { ACTIONS } from "../../../../state_management/actions"
 
 export default function AddNewBoard() {
 
@@ -20,6 +25,8 @@ export default function AddNewBoard() {
     const [submissionErrors, setSubmissionErrors ] = useState(false)
 
     const autoDestructionFunction = useAutoDestruction()
+    
+    const dispatch = useDispatch()
 
     const handleBoardNameChange = (e) => {
         setBoardName(e.target.value)
@@ -65,7 +72,27 @@ export default function AddNewBoard() {
         return errors
     }
 
+    const formatColumnsToStoreData = (columns) => {
+        return columns.map((column, index) => {
+            return {
+                name: column[0],
+                id: index,
+                tasks: [],
+            }
+        })
+    }
+
     const saveFormToStore = (boardName, columns) => {
+
+        
+        let action = {
+            type: ACTIONS.addBoardToStore,
+            payload: {
+                name: boardName,
+                columns: formatColumnsToStoreData(columns)
+            }
+        }
+        dispatch(action)
     }
     
     const handleSubmit = (e) => {

@@ -1,4 +1,5 @@
 export const ACTIONS = {
     toggleTheme: 'TOGGLE_THEME',
-    changeCurrentBoard: 'CHANGE_CURRENT_BOARD'
+    changeCurrentBoard: 'CHANGE_CURRENT_BOARD',
+    addBoardToStore: 'ADD_BOARD_TO_STORE'
 }
