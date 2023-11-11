@@ -50,7 +50,7 @@ function App() {
   return (
     <dispatchContext.Provider value={dispatch}>
       <div className='flex flex-row w-full'>
-        <NavBar boards={data.boards} theme={state.theme}/>
+        <NavBar boards={data.boards} theme={state.theme} currentBoard={state.currentBoard}/>
         <div className='w-full'>
           <BoardBar name={data.boards[0].name}/>
           <BoardTable/>
