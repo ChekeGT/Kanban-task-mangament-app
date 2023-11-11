@@ -5,8 +5,8 @@ export default function AddNewBoard() {
 
     // We use an array of empy strings to represent the columns.
     // Each element of this array will reactively change to have the name of the column.
-
-    const [columns, setColumns] = useState([['', 0]])
+    // [column name, key, 'boolean: errors during the submission of the form?']
+    const [columns, setColumns] = useState([['', 0, true]])
 
     // Key column value is used to presereve the uniqueness of each key, this is just for requirement on react.
     const [keyColumnValue, setKeyColumnValue] = useState(1)
@@ -58,7 +58,7 @@ export default function AddNewBoard() {
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white font-bold text-grayText">Columns</h3>
                 <div className="pb-6">
-                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} value={column[0]} setColumnValue={setColumnValue} deleteColumn={deleteColumn}/>)}
+                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} value={column[0]} setColumnValue={setColumnValue} deleteColumn={deleteColumn} submissionErrors={column[2]}/>)}
                 </div>
                 <div className="flex flex-col gap-4">
                     <button  onClick={addNewColumn} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Column</button>
