@@ -17,7 +17,7 @@ export default function NavBar({boards, theme, currentBoard}){
 
     if (showNavBar){
         return(
-            <header className='w-2/12'>
+            <header className='w-[19.8%]'>
                 <nav className=" flex flex-col min-h-screen justify-between bg-white shadow w-full py-2 font-custom dark:bg-darkGrey pr-3" >
                     <div className="flex flex-col gap-4 w-full mt-2">
                         <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
@@ -40,16 +40,16 @@ export default function NavBar({boards, theme, currentBoard}){
         )
     }else{
         return (
-            <header className='w-2/12 h-[96px]'>
-                <nav className=" flex flex-col justify-between h-[96px] bg-white shadow w-full py-2 font-custom dark:bg-darkGrey pr-3" >
-                    <div className="flex flex-col gap-4 w-full mt-2">
-                        <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
-                    </div>
-                    <div className="grid grid-rows-2 w-[90%] gap-8 mx-3">
-                        <HideNavBar handleToggleNavBar={toggleShowNavBar} showNavBar={showNavBar}/>
+            <>
+            <header className='w-2/12 h-[96px] bg-white dark:bg-darkGrey shadow absolute'>
+                <nav className='w-full h-full'>
+                    <div className='w-full h-full flex justify-center items-center'>
+                        <img className="w-[152.53px] h-[25.22px]" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
                     </div>
                 </nav>
             </header>
+            <HideNavBar handleToggleNavBar={toggleShowNavBar} showNavBar={showNavBar}/>
+        </>
         )
     }
 }

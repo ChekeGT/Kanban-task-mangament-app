@@ -5,7 +5,7 @@ export default function BoardTable() {
     const content = false
 
     return(
-        <div className="flex gap-8 pt-4 pl-6">
+        <div className="flex gap-8 pt-4 pl-6 mt-[96px] h-[100vh]">
             <ColumnTask/>
             <ColumnTask/>
             <ColumnTask/>
