@@ -5,6 +5,7 @@ export default function reducer(state, action){
     let boards = state.boards
     let newBoard
     let boardNameAlreadyUsed
+    let newBoards
     switch (action.type){
         case ACTIONS.toggleTheme:
             newState = {...state, theme: action.payload}
@@ -33,6 +34,11 @@ export default function reducer(state, action){
                 localStorage.state = JSON.stringify(newState)
                 return newState
             }
+        case ACTIONS.deleteBoard:
+            newBoards = boards.filter((board) => board.name != action.payload)
+            newState = {...state, boards: newBoards, currentBoard: null}
+            localStorage.state = JSON.stringify(newState)
+            return newState
         default:
             return state
     }
