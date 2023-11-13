@@ -7,6 +7,7 @@ import { useAutoDestruction } from "../../PopUpContainer";
 // Components
 import TitleInput from "./TitleInput";
 import SubTaskInput from "./SubTaskInput";
+import SelectColumn from "./SelectColumn";
 
 export default function AddTask({ board, columns }) {
 
@@ -127,12 +128,7 @@ export default function AddTask({ board, columns }) {
                 }
                 <button onClick={addNewSubTask} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
-            <div className="flex flex-col gap-2">
-                <h3 className="dark:text-white font-bold text-grayText">Status</h3>
-                <select  className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
-                    <option value="">Todo</option>
-                </select>
-            </div>
+            <SelectColumn columns={columns} value={selectedColumn} setValue={setSelectedColumn} setFormErrors={setSelectedColumnErrors}/>
             <button className="bg-mainPurple p-2 rounded-full text-white font-semibold">Create Task</button>
         </form>
         )
