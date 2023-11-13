@@ -11,12 +11,15 @@ export default function SelectColumn({columns, value, setValue, setFormErrors}){
         if (value == NO_COLUMN_SELECTED){
             error = 'Please select a column.'
         }
+        console.log(value)
+        console.log(error)
 
         if (error){
             setError(error)
             setFormErrors(true)
         }else{
             setFormErrors(false)
+            setError('')
         }
     }
     function handleChange(e){
