@@ -28,9 +28,13 @@ export default function SelectColumn({columns, value, setValue, setFormErrors, s
 
     useEffect(() => {
         let formatValue = value == '' ? NO_COLUMN_SELECTED : value
-        checkForErrors(formatValue)
         setValue(formatValue)
     }, [])
+    useEffect(() => {
+        if (submissionFailed){
+            checkForErrors(value)
+        }
+    }, [submissionFailed])
     
     return(
         <div className="flex flex-col gap-2">
@@ -41,7 +45,7 @@ export default function SelectColumn({columns, value, setValue, setFormErrors, s
                         : ''
                     }
                 </div>
-                    <select onChange={handleChange} value={value} className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
+                    <select onChange={handleChange} value={value} className={`dark:bg-darkGrey w-full p-2 rounded-md border ${error && submissionFailed ? ' border-mainRed' : 'border-gray'}`} name="" id="">
                         {columns.map((column) => (<option key={column.name}>{column.name}</option>))}
                         <option disabled hidden>{NO_COLUMN_SELECTED}</option>
                     </select>

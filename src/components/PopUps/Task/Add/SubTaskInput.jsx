@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import CrossIcon from "../../../Utilities/CrossIcon"
 
 export default function SubTaskInput({ subTasks, value, setValue, autoDestructionFunction, submissionFailed }){
 
     const [error, setError ] = useState('')
 
-    const checkForErrors = (value) => {
+    const checkForErrorsAndSetValue = (value) => {
         let error = ''
         if (value == ''){
             error = "Can't be empty."
@@ -15,16 +15,25 @@ export default function SubTaskInput({ subTasks, value, setValue, autoDestructio
                 error = 'This Subtask name is already in use.'
             }
         })
-
-        return error
+        if (error){
+            setError(error)
+            setValue(value, true)
+        }else{
+            setError('')
+            setValue(value, false)
+        }
     }
     
     const handleChange = (e) => {
-        let actualValue = e.target.value
-        let error = checkForErrors(actualValue)
-        setValue(actualValue, error == '' ? false : true)
-        setError(error)
+        let value = e.target.value
+        checkForErrorsAndSetValue(value)
     }
+    
+    useEffect(() => {
+        if (submissionFailed){
+            checkForErrorsAndSetValue(value)
+        }
+    }, [submissionFailed])
     return (
             <div className="flex items-center gap-4">
                 <div className="relative w-[100%]">

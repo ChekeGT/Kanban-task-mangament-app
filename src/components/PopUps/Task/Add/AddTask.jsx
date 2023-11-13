@@ -115,7 +115,7 @@ export default function AddTask({ board, columns }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="dark:text-white font-bold text-xl">Add New Task</h1>
-            <TitleInput title={title} setTitle={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors} submissionFailed={submissionFailed}/>
+            <TitleInput value={title} setValue={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors} submissionFailed={submissionFailed}/>
             <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors} submissionFailed={submissionFailed}/>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>

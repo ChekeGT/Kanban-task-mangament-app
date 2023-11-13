@@ -1,26 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function TitleInput({title, setTitle, column, setFormErrors, submissionFailed}){
+export default function TitleInput({value, setValue, column, setFormErrors, submissionFailed}){
     
     const [error, setError] = useState('')
 
     const checkForErrors = (value) => {
-        let err = false
+        let err = ''
         if (value == ''){
-            setError("Can't be empty.")
-            err = true
+            err = "Can't be empty."
         }
         if (column){
             column.tasks.forEach((task) => {
                 if (task.name == value){
-                    setError("This task name is already in use.")
-                    err = true
+                    err = "This task name is already in use."
                 }
             })
         }
 
         if (err){
             setFormErrors(true)
+            setError(err)
         }else{
             setFormErrors(false)
             setError('')
@@ -32,13 +31,18 @@ export default function TitleInput({title, setTitle, column, setFormErrors, subm
         
         checkForErrors(value)
 
-        setTitle(value)
+        setValue(value)
     }
+    useEffect(() => {
+        if (submissionFailed){
+            checkForErrors(value)
+        }
+    }, [submissionFailed])
     return (
         <div className='flex flex-col gap-2'>
             <h3 className="dark:text-white font-bold text-grayText">Title</h3>
             <div className="relative">
-                <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error ? ' border-2 border-mainRed' : ''}`} value={title} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
+                <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error ? ' border-2 border-mainRed' : ''}`} value={value} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
                 {
                                 error && submissionFailed ?
                                 <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
