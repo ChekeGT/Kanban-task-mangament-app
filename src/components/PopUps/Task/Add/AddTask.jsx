@@ -57,6 +57,13 @@ export default function AddTask({ board, columns }) {
             setSubtasks(subTasksCopy)
         })
     }
+    
+    const addNewSubTask = () => {
+        const subTasksCopy = [...subTasks]
+        subTasksCopy.push(['', subTaskKey, true])
+        setSubTaskKey(subTaskKey + 1)
+        setSubtasks(subTasksCopy)
+    }
 
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
@@ -118,7 +125,7 @@ export default function AddTask({ board, columns }) {
                         )
                     })
                 }
-                <button className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
+                <button onClick={addNewSubTask} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Status</h3>
