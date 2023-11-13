@@ -50,6 +50,14 @@ export default function AddTask({ board, columns }) {
         return setSubTaskFunction
     }
 
+    const getSubTaskAutodestructionFunctionByIndex = (i) => {
+        return ( () => {
+            const subTasksCopy = [...subTasks]
+            subTasksCopy.splice(i, 1)
+            setSubtasks(subTasksCopy)
+        })
+    }
+
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
    
@@ -106,7 +114,7 @@ export default function AddTask({ board, columns }) {
                     subTasks.map((subTask, index) => {
                         const subTasksNames = subTasks.map((subTask) => subTask[0])
                         return (
-                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)}/>
+                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)} autoDestructionFunction={getSubTaskAutodestructionFunctionByIndex(index)}/>
                         )
                     })
                 }

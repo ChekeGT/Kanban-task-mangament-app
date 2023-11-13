@@ -1,7 +1,7 @@
 import { useState } from "react"
 import CrossIcon from "../../../Utilities/CrossIcon"
 
-export default function SubTaskInput({ subTasks, value, setValue }){
+export default function SubTaskInput({ subTasks, value, setValue, autoDestructionFunction }){
 
     const [error, setError ] = useState('')
 
@@ -37,7 +37,7 @@ export default function SubTaskInput({ subTasks, value, setValue }){
                                 : ''
                     }
                 </div>
-                 <CrossIcon color={'#828FA3'}/>
+                 <CrossIcon deleteFunction={autoDestructionFunction} color={error ? '#EA5555' : '#828FA3'}/>
                  
             </div>
     )
