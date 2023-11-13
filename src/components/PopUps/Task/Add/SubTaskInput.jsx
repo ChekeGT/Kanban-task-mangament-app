@@ -1,7 +1,7 @@
 import { useState } from "react"
 import CrossIcon from "../../../Utilities/CrossIcon"
 
-export default function SubTaskInput({ subTasks, value, setValue, autoDestructionFunction }){
+export default function SubTaskInput({ subTasks, value, setValue, autoDestructionFunction, submissionFailed }){
 
     const [error, setError ] = useState('')
 
@@ -30,7 +30,7 @@ export default function SubTaskInput({ subTasks, value, setValue, autoDestructio
                 <div className="relative w-[100%]">
                     <input className={`dark:bg-darkGrey w-full p-2 rounded-md ${error ? ' border-2 border-mainRed' : 'border border-gray'}`} placeholder='idk' onChange={handleChange} value={value} type="text" />
                     {
-                            error ?
+                            error && submissionFailed ?
                                 <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
                                 <p className=" text-mainRed text-sm">{error}</p>
                                 </div>

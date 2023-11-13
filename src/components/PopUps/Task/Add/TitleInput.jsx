@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function TitleInput({title, setTitle, column, setFormErrors}){
+export default function TitleInput({title, setTitle, column, setFormErrors, submissionFailed}){
     
     const [error, setError] = useState('')
 
@@ -40,7 +40,7 @@ export default function TitleInput({title, setTitle, column, setFormErrors}){
             <div className="relative">
                 <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error ? ' border-2 border-mainRed' : ''}`} value={title} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
                 {
-                                error ?
+                                error && submissionFailed ?
                                 <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
                                     <p className=" text-mainRed text-sm">{error}</p>
                                 </div>

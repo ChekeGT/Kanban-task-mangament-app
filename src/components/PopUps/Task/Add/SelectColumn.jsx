@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export default function SelectColumn({columns, value, setValue, setFormErrors}){
+export default function SelectColumn({columns, value, setValue, setFormErrors, submissionFailed}){
 
     const NO_COLUMN_SELECTED = 'No column selected'
 
@@ -37,7 +37,7 @@ export default function SelectColumn({columns, value, setValue, setFormErrors}){
                 <div className=" flex w-full justify-between gap-5 items-center">
                     <h3 className="dark:text-white font-bold text-grayText">Column</h3>
                     {
-                        error ? <p className=" text-mainRed text-xs">{error}</p>
+                        error && submissionFailed ? <p className=" text-mainRed text-xs">{error}</p>
                         : ''
                     }
                 </div>

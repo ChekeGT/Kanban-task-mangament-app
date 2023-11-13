@@ -70,6 +70,8 @@ export default function AddTask({ board, columns }) {
 
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
+
+    const [submissionFailed, setSubmissionFailed ] = useState(false)
    
 
     // Form stuff.
@@ -102,7 +104,9 @@ export default function AddTask({ board, columns }) {
     
     const hanldeSubmit = (e) => {
         e.preventDefault()
-        if (!formHasErrors()){
+        if (formHasErrors()){
+            setSubmissionFailed(true)
+        }else{
             submitFormToStore()    
             autoDestroy()
         }
@@ -111,21 +115,21 @@ export default function AddTask({ board, columns }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl">Add New Task</h1>
-            <TitleInput title={title} setTitle={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors}/>
-            <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors}/>
+            <TitleInput title={title} setTitle={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors} submissionFailed={submissionFailed}/>
+            <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors} submissionFailed={submissionFailed}/>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>
                 {
                     subTasks.map((subTask, index) => {
                         const subTasksNames = subTasks.map((subTask) => subTask[0])
                         return (
-                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)} autoDestructionFunction={getSubTaskAutodestructionFunctionByIndex(index)}/>
+                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)} autoDestructionFunction={getSubTaskAutodestructionFunctionByIndex(index)} submissionFailed={submissionFailed}/>
                         )
                     })
                 }
                 <button onClick={addNewSubTask} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
-            <SelectColumn columns={columns} value={selectedColumn} setValue={setSelectedColumn} setFormErrors={setSelectedColumnErrors}/>
+            <SelectColumn columns={columns} value={selectedColumn} setValue={setSelectedColumn} setFormErrors={setSelectedColumnErrors} submissionFailed={submissionFailed}/>
             <button className="bg-mainPurple p-2 rounded-full text-white font-semibold">Create Task</button>
         </form>
         )
