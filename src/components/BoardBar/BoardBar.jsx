@@ -1,7 +1,7 @@
 import { useState } from "react"
 import AddNewTaskButton from "./AddNewTaskButton"
 import HamburgerButton from "../Utilities/HamburgerButton"
-import AddTask from "../PopUps/AddTask"
+import AddTask from "../PopUps/Task/Add/AddTask"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import { ACTIONS  } from "../../state_management/actions"
 
@@ -39,7 +39,7 @@ export default function BoardBar({board, numberOfBoards}){
             {
                 showAddPopUp ? 
                 <PopUpContainer autoDestructionFunction={toggleShowAddPopUp}>
-                <AddTask/>        
+                    <AddTask board={board.name} columns={board.columns.map((column) => column.name)} tasks={board.columns.tasks.map((task) => task.name)}/>        
                 </PopUpContainer>
                 : ''
             }

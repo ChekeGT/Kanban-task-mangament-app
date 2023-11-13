@@ -1,8 +1,6 @@
 import { useState } from "react"
 
 // Components
-import PopUpContainer from "../PopUps/PopUpContainer"
-import AddTask from '../PopUps/AddTask'
 
 export default function AddNewTaskButton({handleShowPopUp}){
     return (
