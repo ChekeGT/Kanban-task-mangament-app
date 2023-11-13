@@ -11,8 +11,6 @@ export default function SelectColumn({columns, value, setValue, setFormErrors}){
         if (value == NO_COLUMN_SELECTED){
             error = 'Please select a column.'
         }
-        console.log(value)
-        console.log(error)
 
         if (error){
             setError(error)
@@ -44,7 +42,7 @@ export default function SelectColumn({columns, value, setValue, setFormErrors}){
                     }
                 </div>
                     <select onChange={handleChange} value={value} className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
-                        {columns.map((column) => (<option key={column}>{column}</option>))}
+                        {columns.map((column) => (<option key={column.name}>{column.name}</option>))}
                         <option disabled hidden>{NO_COLUMN_SELECTED}</option>
                     </select>
         </div>

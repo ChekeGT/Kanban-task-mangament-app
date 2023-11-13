@@ -7,11 +7,10 @@ export default function TitleInput({title, setTitle, column, setFormErrors}){
     const checkForErrors = (value) => {
         let err = false
         if (value == ''){
-            console.log('hola cara de bola')
             setError("Can't be empty.")
             err = true
         }
-        if (column != ''){
+        if (column){
             column.tasks.forEach((task) => {
                 if (task.name == value){
                     setError("This task name is already in use.")

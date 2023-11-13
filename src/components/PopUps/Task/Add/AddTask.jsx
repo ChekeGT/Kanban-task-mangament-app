@@ -9,6 +9,7 @@ import TitleInput from "./TitleInput";
 import SubTaskInput from "./SubTaskInput";
 import SelectColumn from "./SelectColumn";
 import DescriptionInput from "./DescriptionInput";
+import { getColumnByColumnName } from "./utilities";
 
 export default function AddTask({ board, columns }) {
 
@@ -39,7 +40,7 @@ export default function AddTask({ board, columns }) {
     
     // Name, key, errors?
     // Key is used to properly render this.
-    const [subTasks, setSubtasks ] = useState([['', 0, true], ['', 1, true]])
+    const [subTasks, setSubtasks ] = useState([['', 0, true]])
     const [subTaskKey, setSubTaskKey ] = useState(1)
 
     const setSubTaskByIndex = (i) => {
@@ -110,7 +111,7 @@ export default function AddTask({ board, columns }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl">Add New Task</h1>
-            <TitleInput title={title} setTitle={setTitle} column={selectedColumn} setFormErrors={setTitleErrors}/>
+            <TitleInput title={title} setTitle={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors}/>
             <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors}/>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>
