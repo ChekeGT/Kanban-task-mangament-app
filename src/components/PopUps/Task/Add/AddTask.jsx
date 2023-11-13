@@ -8,6 +8,7 @@ import { useAutoDestruction } from "../../PopUpContainer";
 import TitleInput from "./TitleInput";
 import SubTaskInput from "./SubTaskInput";
 import SelectColumn from "./SelectColumn";
+import DescriptionInput from "./DescriptionInput";
 
 export default function AddTask({ board, columns }) {
 
@@ -34,7 +35,7 @@ export default function AddTask({ board, columns }) {
     const [titleErrors, setTitleErrors ] = useState(true)
 
     const [description, setDescription ] = useState('')
-    const [descriptionErrors, setDescriptionErros ] = useState('')
+    const [descriptionErrors, setDescriptionErrors ] = useState('')
     
     // Name, key, errors?
     // Key is used to properly render this.
@@ -109,13 +110,8 @@ export default function AddTask({ board, columns }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl">Add New Task</h1>
-
             <TitleInput title={title} setTitle={setTitle} column={selectedColumn} setFormErrors={setTitleErrors}/>
-            <div>
-                 <h3 className="dark:text-white font-bold text-grayText">Description</h3>
-                <textarea className="dark:bg-darkGrey resize-none w-full h-[100px] p-2 rounded-md border border-gray" placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-                recharge the batteries a little." type="textarea" />
-            </div>
+            <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors}/>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>
                 {
