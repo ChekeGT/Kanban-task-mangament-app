@@ -6,11 +6,9 @@ import { useAutoDestruction } from "../../PopUpContainer";
 
 // Components
 import TitleInput from "./TitleInput";
-
+import SubTaskInput from "./SubTaskInput";
 
 export default function AddTask({ board, columns }) {
-
-    const crossIcon = `./src/assets/icon-cross.svg`;
 
     const dispatch = useDispatch()
     const autoDestroy = useAutoDestruction()
@@ -39,8 +37,18 @@ export default function AddTask({ board, columns }) {
     
     // Name, key, errors?
     // Key is used to properly render this.
-    const [subTasks, setSubtasks ] = useState(['', 0, true])
+    const [subTasks, setSubtasks ] = useState([['', 0, true], ['', 1, true]])
     const [subTaskKey, setSubTaskKey ] = useState(1)
+
+    const setSubTaskByIndex = (i) => {
+        const setSubTaskFunction = (name, errorState) => {
+            let subTasksCopy = [...subTasks]
+            subTasksCopy[i][0] = name
+            subTasksCopy[i][2] = errorState
+            setSubtasks(subTasksCopy)
+        }
+        return setSubTaskFunction
+    }
 
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
@@ -94,14 +102,14 @@ export default function AddTask({ board, columns }) {
             </div>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>
-                <div className="flex items-center gap-4">
-                    <input placeholder="e.g. Make Coffe" className=" dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" type="text" />
-                    <img src={crossIcon} alt="" />
-                </div>
-                <div className="flex items-center gap-4">
-                    <input placeholder="e.g. Drink coffe & smile" className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" type="text" />
-                    <img src={crossIcon} alt="" />
-                </div>
+                {
+                    subTasks.map((subTask, index) => {
+                        const subTasksNames = subTasks.map((subTask) => subTask[0])
+                        return (
+                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)}/>
+                        )
+                    })
+                }
                 <button className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
             <div className="flex flex-col gap-2">
