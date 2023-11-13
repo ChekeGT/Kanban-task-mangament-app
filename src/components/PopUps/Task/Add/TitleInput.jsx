@@ -24,6 +24,7 @@ export default function TitleInput({title, setTitle, column, setFormErrors}){
             setFormErrors(true)
         }else{
             setFormErrors(false)
+            setError('')
         }
     }
 
@@ -35,9 +36,18 @@ export default function TitleInput({title, setTitle, column, setFormErrors}){
         setTitle(value)
     }
     return (
-        <div className="flex flex-col gap-2">
+        <div className='flex flex-col gap-2'>
             <h3 className="dark:text-white font-bold text-grayText">Title</h3>
-            <input value={title} onChange={handleChange} className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" placeholder="e.g. Take coffee break" type="text" />
+            <div className="relative">
+                <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error ? ' border-2 border-mainRed' : ''}`} value={title} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
+                {
+                                error ?
+                                <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
+                                    <p className=" text-mainRed text-sm">{error}</p>
+                                </div>
+                                : ''
+                }
+            </div>
         </div>   
     )
 }
