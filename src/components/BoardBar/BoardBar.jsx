@@ -39,7 +39,7 @@ export default function BoardBar({board, numberOfBoards}){
             {
                 showAddPopUp ? 
                 <PopUpContainer autoDestructionFunction={toggleShowAddPopUp}>
-                    <AddTask board={board.name} columns={board.columns.map((column) => column.name)} tasks={board.columns.tasks.map((task) => task.name)}/>        
+                    <AddTask board={board.name} columns={board.columns.map((column) => column.name)}/>        
                 </PopUpContainer>
                 : ''
             }

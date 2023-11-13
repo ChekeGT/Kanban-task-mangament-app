@@ -4,12 +4,27 @@ import { useDispatch } from "../../../../App";
 import { useAutoDestruction } from "../../PopUpContainer";
 
 
-export default function AddTask({ board, columns, tasks }) {
+// Components
+import TitleInput from "./TitleInput";
+
+
+export default function AddTask({ board, columns }) {
 
     const crossIcon = `./src/assets/icon-cross.svg`;
 
     const dispatch = useDispatch()
     const autoDestroy = useAutoDestruction()
+
+
+    // This function is to keep the click only on the local scope of the component
+    //  Why? because this is important in order for the user to close the tab.
+    // Since this will be rendered on the popupcontainer. if the user clicks on the
+    // popup container it will close, but not if he clicks on the popup itself?
+    // why? because we have stop propagation :3
+    
+    function preventPropagation(e){
+        e.stopPropagation()
+    }
 
     // State of the component
     // Each pair represents an input value and if the value has any error asocciated with it.
@@ -29,20 +44,9 @@ export default function AddTask({ board, columns, tasks }) {
 
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
-    
+   
 
-    // This function is to keep the click only on the local scope of the component
-    //  Why? because this is important in order for the user to close the tab.
-    // Since this will be rendered on the popupcontainer. if the user clicks on the
-    // popup container it will close, but not if he clicks on the popup itself?
-    // why? because we have stop propagation :3
-    
-    function preventPropagation(e){
-        e.stopPropagation()
-    }
-
-    
-
+    // Form stuff.
     const formHasErrors = () => {
         let errors = (titleErrors || descriptionErrors || selectedColumnErrors) ? true : false
         
@@ -81,10 +85,8 @@ export default function AddTask({ board, columns, tasks }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl">Add New Task</h1>
-            <div className="flex flex-col gap-2">
-                <h3 className="dark:text-white font-bold text-grayText">Title</h3>
-                <input className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" placeholder="e.g. Take coffee break" type="text" />
-            </div>
+
+            <TitleInput title={title} setTitle={setTitle} column={selectedColumn} setFormErrors={setTitleErrors}/>
             <div>
                  <h3 className="dark:text-white font-bold text-grayText">Description</h3>
                 <textarea className="dark:bg-darkGrey resize-none w-full h-[100px] p-2 rounded-md border border-gray" placeholder="e.g. It’s always good to take a break. This 15 minute break will 
