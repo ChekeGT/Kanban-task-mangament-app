@@ -7,6 +7,9 @@ import { useAutoDestruction } from "../../PopUpContainer";
 // Components
 import TitleInput from "./TitleInput";
 import SubTaskInput from "./SubTaskInput";
+import SelectColumn from "./SelectColumn";
+import DescriptionInput from "./DescriptionInput";
+import { getColumnByColumnName } from "./utilities";
 
 export default function AddTask({ board, columns }) {
 
@@ -33,11 +36,11 @@ export default function AddTask({ board, columns }) {
     const [titleErrors, setTitleErrors ] = useState(true)
 
     const [description, setDescription ] = useState('')
-    const [descriptionErrors, setDescriptionErros ] = useState('')
+    const [descriptionErrors, setDescriptionErrors ] = useState('')
     
     // Name, key, errors?
     // Key is used to properly render this.
-    const [subTasks, setSubtasks ] = useState([['', 0, true], ['', 1, true]])
+    const [subTasks, setSubtasks ] = useState([['', 0, true]])
     const [subTaskKey, setSubTaskKey ] = useState(1)
 
     const setSubTaskByIndex = (i) => {
@@ -67,6 +70,8 @@ export default function AddTask({ board, columns }) {
 
     const [selectedColumn, setSelectedColumn ] = useState('')
     const [selectedColumnErrors, setSelectedColumnErrors ] = useState(true)
+
+    const [submissionFailed, setSubmissionFailed ] = useState(false)
    
 
     // Form stuff.
@@ -99,7 +104,9 @@ export default function AddTask({ board, columns }) {
     
     const hanldeSubmit = (e) => {
         e.preventDefault()
-        if (!formHasErrors()){
+        if (formHasErrors()){
+            setSubmissionFailed(true)
+        }else{
             submitFormToStore()    
             autoDestroy()
         }
@@ -108,31 +115,21 @@ export default function AddTask({ board, columns }) {
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="dark:text-white font-bold text-xl">Add New Task</h1>
-
-            <TitleInput title={title} setTitle={setTitle} column={selectedColumn} setFormErrors={setTitleErrors}/>
-            <div>
-                 <h3 className="dark:text-white font-bold text-grayText">Description</h3>
-                <textarea className="dark:bg-darkGrey resize-none w-full h-[100px] p-2 rounded-md border border-gray" placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-                recharge the batteries a little." type="textarea" />
-            </div>
+            <TitleInput title={title} setTitle={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors} submissionFailed={submissionFailed}/>
+            <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors} submissionFailed={submissionFailed}/>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Subtasks</h3>
                 {
                     subTasks.map((subTask, index) => {
                         const subTasksNames = subTasks.map((subTask) => subTask[0])
                         return (
-                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)} autoDestructionFunction={getSubTaskAutodestructionFunctionByIndex(index)}/>
+                            <SubTaskInput key={subTask[1]} subTasks={subTasksNames} value={subTask[0]} setValue={setSubTaskByIndex(index)} autoDestructionFunction={getSubTaskAutodestructionFunctionByIndex(index)} submissionFailed={submissionFailed}/>
                         )
                     })
                 }
                 <button onClick={addNewSubTask} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
-            <div className="flex flex-col gap-2">
-                <h3 className="dark:text-white font-bold text-grayText">Status</h3>
-                <select className="dark:text-white dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
-                    <option value="">Todo</option>
-                </select>
-            </div>
+            <SelectColumn columns={columns} value={selectedColumn} setValue={setSelectedColumn} setFormErrors={setSelectedColumnErrors} submissionFailed={submissionFailed}/>
             <button className="bg-mainPurple p-2 rounded-full text-white font-semibold">Create Task</button>
         </form>
         )
