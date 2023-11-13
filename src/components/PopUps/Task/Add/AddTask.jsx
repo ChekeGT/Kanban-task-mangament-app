@@ -107,7 +107,7 @@ export default function AddTask({ board, columns }) {
     
     return(
         <form onClick={preventPropagation} onSubmit={hanldeSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
-            <h1 className="font-bold text-xl">Add New Task</h1>
+            <h1 className="dark:text-white font-bold text-xl">Add New Task</h1>
 
             <TitleInput title={title} setTitle={setTitle} column={selectedColumn} setFormErrors={setTitleErrors}/>
             <div>
@@ -129,7 +129,7 @@ export default function AddTask({ board, columns }) {
             </div>
             <div className="flex flex-col gap-2">
                 <h3 className="dark:text-white font-bold text-grayText">Status</h3>
-                <select  className="dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
+                <select className="dark:text-white dark:bg-darkGrey w-full p-2 rounded-md  border border-gray" name="" id="">
                     <option value="">Todo</option>
                 </select>
             </div>
