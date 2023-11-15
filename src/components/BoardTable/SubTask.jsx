@@ -6,7 +6,7 @@ export default function SubTask() {
 
 
     return(
-        <div className={`${ isChecked ? 'bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
+        <div className={`${ isChecked ? 'dark:bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
             <input  checked={isChecked}
         onChange={() => setIsChecked(!isChecked)} id="subTasks" className="checked:line-through" type="checkbox" />
              <label

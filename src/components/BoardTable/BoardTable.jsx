@@ -35,6 +35,7 @@ export default function BoardTable({ boards, numberOfBoards }) {
             key={column.id}
             numberOfTasks={column.tasks.length}
             columnName={column.name}
+            boards={boards}
           />
         ))}
         <div className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">

@@ -2,7 +2,7 @@ import { useState } from "react"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import ViewTask from '../PopUps/ViewTask'
 
-export default function Task({titleTask, completedSubtasks}) {
+export default function Task({titleTask, completedSubtasks, boards}) {
     
     
     const [showPopUp, setShowPopUp ] = useState(false) 
@@ -19,10 +19,10 @@ export default function Task({titleTask, completedSubtasks}) {
         return(
             <>
             <PopUpContainer autoDestructionFunction={deletePopUp}>
-                <ViewTask/>
+                <ViewTask boards={boards}/>
             </PopUpContainer>
             <div onClick={handleShowPopUp} className="dark:bg-darkGrey hover:text-mainPurple cursor-pointer max-w-[280px] shadow-md flex flex-col gap-1 p-3 pr-12 rounded-lg items-start">
-                <h2 className="dark:hover:text-mainPurple dark:text-white font-semibold">Build UI for onboarding flow</h2>
+                <h2 className="dark:hover:text-mainPurple dark:text-white font-semibold">{titleTask}</h2>
                 <p className="text-sm text-grayText">0 of 3 subtasks</p>
             </div>
             </>
@@ -32,7 +32,7 @@ export default function Task({titleTask, completedSubtasks}) {
     } else {
         return(
             <div onClick={handleShowPopUp} className="dark:bg-darkGrey hover:text-mainPurple cursor-pointer max-w-[280px] shadow-md flex flex-col gap-1 p-3 pr-12 rounded-lg items-start">
-                <h2 className="dark:hover:text-mainPurple dark:text-white font-semibold">Build UI for onboarding flow</h2>
+                <h2 className="dark:hover:text-mainPurple dark:text-white font-semibold">{titleTask}</h2>
                 <p className="text-sm text-grayText">0 of 3 subtasks</p>
             </div>
         )
