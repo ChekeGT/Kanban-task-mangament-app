@@ -4,6 +4,8 @@ import HamburgerButton from "../Utilities/HamburgerButton"
 import AddTask from "../PopUps/Task/Add/AddTask"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import { ACTIONS  } from "../../state_management/actions"
+import AddOrEditBoard from '../PopUps/Board/AddOrEdit/AddOrEditBoard'
+import { TYPES } from "../PopUps/Board/AddOrEdit/types"
 
 import GeneralDeletePopUp from "../PopUps/GeneralDeletePopUp"
 
@@ -60,7 +62,7 @@ export default function BoardBar({board, numberOfBoards}){
             {
                 showEditPopUp ?
                 <PopUpContainer autoDestructionFunction={toggleShowEditPopUp}>
-
+                    <AddOrEditBoard type={TYPES.edit} board={board}/>
                 </PopUpContainer>
                 : ''
             }
