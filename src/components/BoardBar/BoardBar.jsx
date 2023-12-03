@@ -28,6 +28,13 @@ export default function BoardBar({board, numberOfBoards}){
     }
 
     const [activeHamburgerButton, setActiveHamburgerButton ] = useState(true)
+    const [showOptions, setShowOptions ] = useState(false)
+
+    function toggleShowOptions(){
+        setShowOptions(!showOptions)
+    }
+
+
     const [activeAddNewTaskButton , setActiveAddNewTaskButton ] = useState(true)
 
     useEffect(() => {
@@ -40,7 +47,7 @@ export default function BoardBar({board, numberOfBoards}){
                 <p className="font-custom text-black font-bold text-3xl dark:text-white">{board == null ? numberOfBoards > 0 ? 'You have no boards selected.' : 'You have no boards' : board.name}</p>
                 <div className="flex flex-row items-center gap-5">
                      <AddNewTaskButton board={board} showPopUp={toggleShowAddPopUp} active={activeAddNewTaskButton}/>
-                    <HamburgerButton active={activeHamburgerButton} type={'Board'} handleShowDeletePopUp={toggleShowDeletePopUp} handleShowEditPopUp={toggleShowEditPopUp}/>
+                     <HamburgerButton active={activeHamburgerButton} showOptions={showOptions} toggleShowOptions={toggleShowOptions} type={'Board'} handleShowDeletePopUp={toggleShowDeletePopUp} handleShowEditPopUp={toggleShowEditPopUp}/>
                 </div>
             </div>
             {
@@ -63,6 +70,11 @@ export default function BoardBar({board, numberOfBoards}){
                     <GeneralDeletePopUp type={'board'} name={board.name} action={{type: ACTIONS.deleteBoard, payload: board.name}}/>
                 </PopUpContainer>
                 : ''
+            }
+            {
+                showOptions ?
+                <div  onClick={toggleShowOptions} className="bg-transparent absolute left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] w-[100%] h-[100%] flex justify-center items-center z-30">
+                </div> : <></>
             }
         </>
     )
