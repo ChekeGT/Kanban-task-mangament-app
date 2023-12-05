@@ -3,5 +3,7 @@ export const ACTIONS = {
     changeCurrentBoard: 'CHANGE_CURRENT_BOARD',
     addBoardToStore: 'ADD_BOARD_TO_STORE',
     deleteBoard: 'DELETE_BOARD',
-    addTask: 'ADD_TASK'
+    addTask: 'ADD_TASK',
+    deleteColumn: 'DELETE_COLUMN',
+    editBoard: 'EDIT_BOARD'
 }

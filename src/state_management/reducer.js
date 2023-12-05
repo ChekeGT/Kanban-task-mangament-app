@@ -1,11 +1,31 @@
 import { ACTIONS } from "./actions";
 
+ 
+
 export default function reducer(state, action){
     let newState
     let boards = state.boards
     let newBoard
     let boardNameAlreadyUsed
     let newBoards
+    let currentBoard
+
+
+    function getColumnByName(boardName, columnName){
+        for (let i = 0; i < boards.length; i++){
+            const board = boards[i]
+            if (board.name == boardName){
+                for (let j = 0; j < board.columns.length; j++){
+                    const column = board.columns[j]
+                    if (column.name == columnName){
+                        return column
+                    }
+                }
+            }   
+        }
+        return undefined
+    }
+
     switch (action.type){
         case ACTIONS.toggleTheme:
             newState = {...state, theme: action.payload}
@@ -27,7 +47,6 @@ export default function reducer(state, action){
                 boards.push(newBoard)
                 newState = {...state, boards: boards, currentBoard: newBoard}
                 localStorage.state = JSON.stringify(newState)
-                console.log(newState)
                 return newState
             }else{
                 newState = {...state, currentBoard: newBoard}
@@ -70,6 +89,42 @@ export default function reducer(state, action){
                 return board
             })
             newState = {...state, boards: newBoards}
+            localStorage.state = JSON.stringify(newState)
+            return newState
+        case ACTIONS.deleteColumn:
+            newBoards = boards.map((board) => {
+                if (board.name == action.payload.boardName){
+                    board.columns = board.columns.filter((column) => {
+                        if (column.name == action.payload.columnName){
+                            return false
+                        }
+                        return true
+                    })
+                    currentBoard = board
+                }
+                return board
+            })
+            newState = {...state, boards: newBoards}
+            localStorage.state = JSON.stringify(newState)
+            return newState
+        case ACTIONS.editBoard:
+            newBoards = boards.map((board) => {
+                if (board.name == action.payload.originalName){
+                    board.name = action.payload.editedName
+                    board.columns = action.payload.columns.map((column) => {
+                        const { name } = column
+                        if (column.originalName){
+                            const originalColumn = getColumnByName(action.payload.originalName, column.originalName)
+                            column = originalColumn == undefined ? getColumnByName(action.payload.originalName, name) : originalColumn
+                            column.name = name                
+                        }
+                        return column
+                    })
+                    currentBoard = board
+                }
+                return board    
+            })
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
         default:

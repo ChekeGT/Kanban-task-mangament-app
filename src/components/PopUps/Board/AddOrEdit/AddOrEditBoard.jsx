@@ -42,8 +42,9 @@ export default function AddNewBoard({ type, board = null }) {
             })
             setBoardName(name)
             setColumns(columns)
+            setKeyColumnValue(columns.length)
         }
-    }, [board])
+    }, [])
 
     const handleBoardNameChange = (e) => {
         setBoardName(e.target.value)
@@ -53,6 +54,15 @@ export default function AddNewBoard({ type, board = null }) {
         columnsCopy[index][0] = value
         setColumns(columnsCopy)
     }
+
+    const columnExistedInOriginalBoard = (key) => {
+        if (board.columns[key]){
+            return true
+        }
+        return false
+    }
+
+    const getOrginalColumnName = (key) => board.columns[key].name
 
     const deleteColumn = (index) => {
         const columnsCopy = columns.slice(0, index).concat(columns.slice(index + 1))
@@ -130,6 +140,28 @@ export default function AddNewBoard({ type, board = null }) {
         }
         dispatch(action)
     }
+
+    function editStoredBoard(board, editedBoardName, editedBoardColumns){
+        const action = {
+            type: ACTIONS.editBoard,
+            payload:{
+                originalName: board.name,
+                editedName: editedBoardName,
+                columns: editedBoardColumns.map((column) => {
+                    const key = column[1]
+                    const name = column[0]
+                    if (columnExistedInOriginalBoard(key)){
+                        return {
+                            originalName: getOrginalColumnName(key),
+                            name: name,
+                        }
+                    }
+                    return {name: name, tasks: []}
+                })
+            }
+        }
+        dispatch(action)
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -137,6 +169,9 @@ export default function AddNewBoard({ type, board = null }) {
         if (detectSubmissionErrors(boardName, columns) == false){
             if (type == TYPES.add){
                 saveFormToStore(boardName, columns)   
+            }
+            if (type == TYPES.edit){
+                editStoredBoard(board, boardName, columns)
             }
             autoDestructionFunction()
         }else{
