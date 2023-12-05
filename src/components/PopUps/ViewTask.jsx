@@ -60,13 +60,13 @@ export default function ViewTask({task, column, board}) {
         dispatch(action)
     }
 
-    function doesColumnHasATaskNamedLikeThat(columnName, taskName){
+    function doesColumnHasATaskNamedLikeThat(columnName, taskTitle){
         for(let i = 0; i < board.columns.length ; i++){
             const column = board.columns[i]
             if (column.name == columnName){
                 for (let j = 0; j < column.tasks.length; j++){
                     const task = column.tasks[j]
-                    if (task.name == taskName){
+                    if (task.title == taskTitle){
                         return true
                     }
                 }
@@ -76,7 +76,7 @@ export default function ViewTask({task, column, board}) {
     } 
     function handleSelectedColumnChange(e){
         const newColumn = e.target.value
-        if (!doesColumnHasATaskNamedLikeThat(newColumn, task.name)){
+        if (!doesColumnHasATaskNamedLikeThat(newColumn, task.title)){
             moveTaskToAnotherColumn(newColumn)
         }else{
             if (newColumn == column.name){
