@@ -1,11 +1,31 @@
 import { useState } from "react";
-import SubTask from "../BoardTable/SubTask";
 
-export default function ViewTask({title, }) {
+function SubTask({ title, isCompleted }) {
+
+
+    const [isChecked, setIsChecked] = useState(isCompleted);
+
+
+    return(
+        <div className={`${ isChecked ? 'dark:bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
+            <input  checked={isChecked}
+        onChange={() => setIsChecked(!isChecked)} id="subTasks" className="checked:line-through" type="checkbox" />
+             <label
+                htmlFor="subTasks" className={`dark:text-white cursor-pointer ${isChecked ?'line-through opacity-50' : ''}`}
+>
+                {title}
+            </label>
+        </div>
+    )
+}
+export default function ViewTask({task, column, board}) {
+
+    const {title, description, subTasks} = task
+
+    const completedSubtasks = subTasks == undefined ? 0 : subTasks.filter((subTask) => subTask.isCompleted).length
+    const numberOfSubtasks = subTasks == undefined ? 0 : subTasks.length
     
     const [openOptions, setOpenOptions] = useState(false);
-
-    const optionIcon = `./src/assets/icon-vertical-ellipsis.svg`;
 
 
     // This function is to keep the click only on the local scope of the component
@@ -17,44 +37,25 @@ export default function ViewTask({title, }) {
     function preventPropagation(e){
         e.stopPropagation()
     }
-    
-    const toggleOptions = () => {
-        setOpenOptions(!openOptions);
-    };
-    
 
     return(
         <div  onClick={preventPropagation} className="dark:bg-darkGrey flex flex-col gap-5 bg-white w-[480px] p-6">
-            <div className="flex items-center">
-                <h1 className="dark:text-white font-bold text-xl">Research pricing points of various competitors and trial different business models</h1>
-                <div className="relative cursor-pointer">
-                    <div onClick={toggleOptions}>
-                        <img  src={optionIcon} alt="" />
-                    </div>
-                    
-                    {openOptions && (
-                        <div className="dark:bg-darkGrey flex flex-col gap-4 w-[200px] p-4 -left-10 absolute bg-white rounded-xl">
-                        <button className="dark:text-white text-left">Edit Task</button>
-                        <button className="text-left text-mainRed">Delete Task</button>
-                        </div>
-                    )}
-                </div>
-                
-            </div>
-            <p className=" text-grayText">We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.</p>
+            <h1 className="dark:text-white font-bold text-xl">{title}</h1>
+            <p className=" text-grayText">{description}</p>
             <div> 
-                <h3 className="dark:text-white">Subtasks (2 of 3)</h3>
-                {/* SUBTASK COMPONENT HERE */}
+                <h3 className="dark:text-white">Subtasks ({completedSubtasks} of {numberOfSubtasks})</h3>
                 <div className="flex flex-col gap-2 pt-2">
-                    <SubTask/>
+                    {
+                        subTasks == undefined ? <></> : subTasks.map((subtask) => <SubTask title={subtask.title} isCompleted={subtask.isCompleted}></SubTask>)
+                    }
                 </div>
             </div>
             <div className="flex flex-col gap-4">
-                <h3 className="dark:text-white">Current Status</h3>
+                <h3 className="dark:text-white">Current Column</h3>
                 <select className="dark:bg-darkGrey dark:text-white w-full p-2 rounded-md border border-mainPurple" name="" id="">
-                    <option value="">Todo</option>
-                    <option value="">Doing</option>
-                    <option value="">Done</option>
+                    {
+                        board.columns.map((column) => <option key={column.name} value="">{column.name}</option>)
+                    } 
                 </select>
             </div>
             

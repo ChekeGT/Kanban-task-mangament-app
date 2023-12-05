@@ -59,7 +59,7 @@ function App() {
           <NavBar boards={state.boards} theme={state.theme} currentBoard={state.currentBoard}/>
           <div className='w-full dark:bg-veryDarkGrey'>
             <BoardBar board={state.currentBoard} numberOfBoards={state.boards.length}/>
-            <BoardTable boards={state.currentBoard} numberOfBoards={state.boards}/>
+            <BoardTable board={state.currentBoard}/>
           </div>
         </div>
       </boardsContext.Provider>
