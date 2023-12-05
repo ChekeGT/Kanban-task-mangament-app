@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 
 export default function NavBar({boards, theme, currentBoard}){
-    const [showNavBar, setShowNavBar ] = useState(false)
+    const [showNavBar, setShowNavBar ] = useState(true)
 
     const toggleShowNavBar = () => {
         setShowNavBar(!showNavBar)
