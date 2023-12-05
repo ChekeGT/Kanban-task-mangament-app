@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { ACTIONS } from "../../state_management/actions";
 
-function SubTask({ title, isCompleted }) {
+import { useDispatch } from "../../App";
+
+function SubTask({ title, isCompleted, updateStatus }) {
 
 
     const [isChecked, setIsChecked] = useState(isCompleted);
 
 
     return(
-        <div className={`${ isChecked ? 'dark:bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
-            <input  checked={isChecked}
-        onChange={() => setIsChecked(!isChecked)} id="subTasks" className="checked:line-through" type="checkbox" />
+        <div className={`${ isCompleted ? 'dark:bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
+            <input  checked={isCompleted}
+        onChange={() => updateStatus(!isCompleted)} id="subTasks" className="checked:line-through" type="checkbox" />
              <label
                 htmlFor="subTasks" className={`dark:text-white cursor-pointer ${isChecked ?'line-through opacity-50' : ''}`}
 >
@@ -20,12 +23,27 @@ function SubTask({ title, isCompleted }) {
 }
 export default function ViewTask({task, column, board}) {
 
+    const dispatch = useDispatch()
     const {title, description, subtasks} = task
 
     const completedSubtasks = subtasks.filter((subTask) => subTask.isCompleted).length
     const numberOfSubtasks = subtasks.length
     
-
+    const getUpdateSubtaskCheckedStatusFunction = (subtask) => {
+        return function (checkedStatus){
+            const action = {
+                type: ACTIONS.updateSubtaskCheckedStatus,
+                payload: {
+                    board: board,
+                    column: column,
+                    task: task,
+                    subtaskTitle: subtask.title,
+                    checkedStatus: checkedStatus
+                }
+            }
+            dispatch(action)
+        }
+    }
 
     // This function is to keep the click only on the local scope of the component
     //  Why? because this is important in order for the user to close the tab.
@@ -45,7 +63,7 @@ export default function ViewTask({task, column, board}) {
                 <h3 className="dark:text-white">Subtasks ({completedSubtasks} of {numberOfSubtasks})</h3>
                 <div className="flex flex-col gap-2 pt-2">
                     {
-                        subtasks.map((subtask, i) => <SubTask key={i} title={subtask.title} isCompleted={subtask.isCompleted}></SubTask>)
+                        subtasks.map((subtask, i) => <SubTask key={i} title={subtask.title} isCompleted={subtask.isCompleted} updateStatus={getUpdateSubtaskCheckedStatusFunction(subtask)}></SubTask>)
                     }
                 </div>
             </div>

@@ -128,6 +128,31 @@ export default function reducer(state, action){
             newState = {...state, boards: newBoards, currentBoard: currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
+        case ACTIONS.updateSubtaskCheckedStatus:
+            newBoards = boards.map((board) => {
+                if (board.name == action.payload.board.name){
+                    board.columns = board.columns.map((column) => {
+                        if (column.name == action.payload.column.name){
+                            column.tasks = column.tasks.map((task) => {
+                                if (task.title == action.payload.task.title){
+                                    task.subtasks = task.subtasks.map((subtask) => {
+                                        if (subtask.title == action.payload.subtaskTitle){
+                                            subtask.isCompleted = action.payload.checkedStatus
+                                        }
+                                        return subtask
+                                    })
+                                }
+                                return task
+                            })
+                        }
+                        return column
+                    })
+                    currentBoard = board
+                }
+                return board
+            })
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            return newState
         default:
             return state
     }
