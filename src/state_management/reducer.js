@@ -152,6 +152,34 @@ export default function reducer(state, action){
                 return board
             })
             newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            localStorage.state = JSON.stringify(newState)
+            return newState
+        case ACTIONS.moveTaskToAnotherColumn:
+            newBoards = boards.map((board) => {
+                if (board.name == action.payload.board.name){
+                    board.columns = board.columns.map((column) => {
+                        if (column.name == action.payload.column.name){
+                            column.tasks = column.tasks.filter((task) => task.title != action.payload.task.title)
+                        }
+                        if (column.name == action.payload.newColumnName){
+                            let shouldAddNewTask = true
+                            column.tasks.forEach((task) => {
+                                if (task.title == action.payload.task.title){
+                                    shouldAddNewTask = false
+                                }
+                            })
+                            if (shouldAddNewTask){
+                                column.tasks.push(action.payload.task)
+                            }
+                        }
+                        return column
+                    })
+                    currentBoard = board
+                }
+                return board
+            })
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            localStorage.state = JSON.stringify(newState)
             return newState
         default:
             return state
