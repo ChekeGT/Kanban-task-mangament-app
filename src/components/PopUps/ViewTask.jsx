@@ -28,6 +28,7 @@ export default function ViewTask({task, column, board}) {
     const completedSubtasks = task.subtasks.filter((subTask) => subTask.isCompleted).length
     const numberOfSubtasks = task.subtasks.length
     const [currentColumn, setCurrentColumn ] = useState(column.name)
+    const [currentColumnError, setCurrentColumnError] = useState('')
 
     
     const getUpdateSubtaskCheckedStatusFunction = (subtask) => {
@@ -59,11 +60,32 @@ export default function ViewTask({task, column, board}) {
         dispatch(action)
     }
 
-
+    function doesColumnHasATaskNamedLikeThat(columnName, taskName){
+        for(let i = 0; i < board.columns.length ; i++){
+            const column = board.columns[i]
+            if (column.name == columnName){
+                for (let j = 0; j < column.tasks.length; j++){
+                    const task = column.tasks[j]
+                    if (task.name == taskName){
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    } 
     function handleSelectedColumnChange(e){
         const newColumn = e.target.value
+        if (!doesColumnHasATaskNamedLikeThat(newColumn, task.name)){
+            moveTaskToAnotherColumn(newColumn)
+        }else{
+            if (newColumn == column.name){
+                setCurrentColumnError('')
+            }else{
+                setCurrentColumnError('The column you have selected already has a task named like this. Please rename it or select another column.')
+            }
+        }
         setCurrentColumn(newColumn)
-        moveTaskToAnotherColumn(newColumn)
     }
 
     // This function is to keep the click only on the local scope of the component
@@ -90,6 +112,7 @@ export default function ViewTask({task, column, board}) {
             </div>
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white">Current Column</h3>
+                {currentColumnError ? <p className="text-mainRed text-sm">{currentColumnError}</p> : <></>}
                 <select onChange={handleSelectedColumnChange} value={currentColumn} className="dark:bg-darkGrey dark:text-white w-full p-2 rounded-md border border-mainPurple" name="" id="">
                     {
                         board.columns.map((column) => <option key={column.name} value={column.name}>{column.name}</option>)
