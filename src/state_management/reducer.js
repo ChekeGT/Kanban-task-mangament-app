@@ -85,10 +85,11 @@ export default function reducer(state, action){
                         }
                         return column
                     })
+                    currentBoard = board
                 }
                 return board
             })
-            newState = {...state, boards: newBoards}
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
         case ACTIONS.deleteColumn:

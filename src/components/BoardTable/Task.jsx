@@ -4,11 +4,11 @@ import ViewTask from '../PopUps/ViewTask'
 
 export default function Task({task, column, board}) {
     
-    const {title, subTasks } = task
+    const {title, subtasks } = task
 
         
-    const completedSubtasks = subTasks == undefined ? 0 : subTasks.filter((subTask) => subTask.isCompleted).length
-    const numberOfSubtasks = subTasks == undefined ? 0 : subTasks.length
+    const completedSubtasks = subtasks.filter((subTask) => subTask.isCompleted).length
+    const numberOfSubtasks = subtasks.length
 
     const [showPopUp, setShowPopUp ] = useState(false) 
 
