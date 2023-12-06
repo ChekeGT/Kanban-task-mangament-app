@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ACTIONS } from "../../state_management/actions";
+import { TYPES } from "../Utilities/types";
 
 import { useDispatch } from "../../App";
+import HamburgerButton from "../Utilities/HamburgerButton";
+import PopUpContainer from "./PopUpContainer";
+import GeneralDeletePopUp from "./GeneralDeletePopUp";
+import AddTask from "./Task/Add/AddTask";
 
 function SubTask({ title, isCompleted, updateStatus }) {
 
@@ -29,6 +34,23 @@ export default function ViewTask({task, column, board}) {
     const numberOfSubtasks = task.subtasks.length
     const [currentColumn, setCurrentColumn ] = useState(column.name)
     const [currentColumnError, setCurrentColumnError] = useState('')
+
+    const [showOptions, setShowOptions ] = useState(false)
+
+    const [showDeletePopUp, setShowDeletePopUp ] = useState(false)
+    const [showEditPopUp, setShowEditPopUp ] = useState(false)
+
+    function toggleShowOptions(){
+        setShowOptions(!showOptions)
+    }
+
+    function toggleShowDeletePopUp(){
+        setShowDeletePopUp(!showDeletePopUp)
+    }
+    
+    function toggleShowEditPopup(){
+        setShowEditPopUp(!showEditPopUp)
+    }
 
     
     const getUpdateSubtaskCheckedStatusFunction = (subtask) => {
@@ -98,9 +120,30 @@ export default function ViewTask({task, column, board}) {
         e.stopPropagation()
     }
 
+    if (showDeletePopUp){
+        let action = {
+
+        }
+        return (
+            <PopUpContainer autoDestructionFunction={toggleShowDeletePopUp}>
+                <GeneralDeletePopUp action={action} type={TYPES.task} name={task.title}/>
+            </PopUpContainer>
+        )
+    }
+    if (showEditPopUp){
+        return (
+            <PopUpContainer autoDestructionFunction={toggleShowEditPopup}>
+                {/* We will later on edit the add task popup to support edition. */}
+                <AddTask board={board} columns={board.columns}></AddTask>
+            </PopUpContainer>
+        )
+    }
     return(
         <div  onClick={preventPropagation} className="dark:bg-darkGrey flex flex-col gap-5 bg-white w-[480px] p-6">
-            <h1 className="dark:text-white font-bold text-xl">{task.title}</h1>
+            <div className="flex flex-row gap-2 items-center justify-between">
+                <h1 className="dark:text-white font-bold text-xl">{task.title}</h1>
+                <HamburgerButton handleShowEditPopUp={toggleShowEditPopup} handleShowDeletePopUp={toggleShowDeletePopUp} showOptions={showOptions} toggleShowOptions={toggleShowOptions} active={true} type={'task'}></HamburgerButton>
+            </div>
             <p className=" text-grayText">{task.description}</p>
             <div> 
                 <h3 className="dark:text-white">Subtasks ({completedSubtasks} of {numberOfSubtasks})</h3>
