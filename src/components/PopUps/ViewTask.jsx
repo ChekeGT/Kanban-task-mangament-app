@@ -122,7 +122,12 @@ export default function ViewTask({task, column, board}) {
 
     if (showDeletePopUp){
         let action = {
-
+            type: ACTIONS.deleteTask,
+            payload: {
+                board: board,
+                column: column,
+                task: task
+            }
         }
         return (
             <PopUpContainer autoDestructionFunction={toggleShowDeletePopUp}>

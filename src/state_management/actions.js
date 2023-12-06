@@ -7,5 +7,6 @@ export const ACTIONS = {
     deleteColumn: 'DELETE_COLUMN',
     editBoard: 'EDIT_BOARD',
     updateSubtaskCheckedStatus: 'UPDATE_SUBTASK_CHECKED_STATUS',
-    moveTaskToAnotherColumn: 'MOVE_TASK_TO_ANOTHER_COLUMN'
+    moveTaskToAnotherColumn: 'MOVE_TASK_TO_ANOTHER_COLUMN',
+    deleteTask: 'DELETE_TASK'
 }

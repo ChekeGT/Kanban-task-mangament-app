@@ -181,6 +181,27 @@ export default function reducer(state, action){
             newState = {...state, boards: newBoards, currentBoard: currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
+        case ACTIONS.deleteTask:
+            newBoards = boards.map((board) => {
+                if (board.name == action.payload.board.name){
+                    board.columns = board.columns.map((column) => {
+                        if (column.name == action.payload.column.name){
+                            column.tasks = column.tasks.filter((task) => {
+                                if (task.title == action.payload.task.title){
+                                    return false
+                                }
+                                return true
+                            })
+                        }
+                        return column
+                    })
+                    currentBoard = board
+                }
+                return board
+            })
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            localStorage.state = JSON.stringify(newState)
+            return newState
         default:
             return state
     }
