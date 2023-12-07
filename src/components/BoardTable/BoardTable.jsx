@@ -1,29 +1,48 @@
+import { useState } from "react";
 import Column from "./Column";
+import PopUpContainer from "../PopUps/PopUpContainer";
+import AddOrEditBoard from "../PopUps/Board/AddOrEdit/AddOrEditBoard";
+import { TYPES } from "../PopUps/Board/AddOrEdit/types";
+
+function EditBoardPopUp({board, autoDestructionFunction}){
+  return (
+    <PopUpContainer autoDestructionFunction={autoDestructionFunction}>
+      <AddOrEditBoard board={board} type={TYPES.edit}></AddOrEditBoard>
+    </PopUpContainer>
+  )
+}
 
 
 export default function BoardTable({ board }) {
+
+  const [showEditBoardPopUp, setShowEditBoardPopUp ] = useState(false)
     
   const { columns } = board
-  
+
+  function toggleShowEditBoardPopUp(){
+    setShowEditBoardPopUp(!showEditBoardPopUp)
+  }
   if (columns.length === 0) {
     return (
       <div className="flex gap-8 pt-4 pl-6 pt-[120px] h-[100%] min-h-screen justify-center items-center">
+        { showEditBoardPopUp ?<EditBoardPopUp autoDestructionFunction={toggleShowEditBoardPopUp} board={board}/> : <></> }
         <div className="flex gap-4 flex-col items-center">
           <h1 className="text-grayText font-bold">
             This board is empty. Create a new column to get started.
           </h1>
-          <button className="bg-mainPurple p-2 px-4 rounded-full text-white font-semibold">
+          <button onClick={toggleShowEditBoardPopUp} className="bg-mainPurple p-2 px-4 rounded-full text-white font-semibold">
             + Add New Column
           </button>
         </div>
       </div>
-    );
+    )
   }
     
   
   
     return (
       <div className="flex gap-8 pt-4 pl-6 pt-[120px] h-[100%] min-h-screen">
+        { showEditBoardPopUp ?<EditBoardPopUp autoDestructionFunction={toggleShowEditBoardPopUp} board={board}/> : <></> }
         {columns.map((column) => (
           <Column
             key={column.name}
@@ -31,9 +50,9 @@ export default function BoardTable({ board }) {
             column={column}
           />
         ))}
-        <div className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">
+        <button onClick={toggleShowEditBoardPopUp} className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">
           <h1>+ New Column</h1>
-        </div>
+        </button>
       </div>
     );
   }

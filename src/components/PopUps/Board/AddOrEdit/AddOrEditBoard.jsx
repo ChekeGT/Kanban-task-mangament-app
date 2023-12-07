@@ -9,7 +9,7 @@ import { ACTIONS } from "../../../../state_management/actions"
 import NameInput from "./NameInput"
 import { TYPES } from "./types"
 
-export default function AddNewBoard({ type, board = null }) {
+export default function AddOrEditBoard({ type, board = null }) {
 
     // We use an array of empy strings to represent the columns.
     // Each element of this array will reactively change to have the name of the column.
