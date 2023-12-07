@@ -126,6 +126,10 @@ export default function AddOrEditTask({ board, columns, task = null, column = nu
             setDescription(task.description)
             setTitle(task.title)
             setSubTaskKey(task.subtasks.length)
+            setTitleErrors(false)
+            setDescriptionErrors(false)
+            setSelectedColumnErrors(false)
+            setSubTasksErrors(false)
         }
     }, [task, column, type])
     
@@ -166,7 +170,7 @@ export default function AddOrEditTask({ board, columns, task = null, column = nu
                 editTaskInStore()
             }else{
                 submitFormToStore()
-            } 
+            }
             autoDestroy()
         }
     }

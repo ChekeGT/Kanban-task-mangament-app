@@ -34,11 +34,11 @@ export default function TitleInput({value, setValue, column, setFormErrors, subm
 
         setValue(value)
     }
+
     useEffect(() => {
-        if (submissionFailed){
-            checkForErrors(value)
-        }
-    }, [submissionFailed])
+        checkForErrors(value)
+    }, [column, submissionFailed])
+
     return (
         <div className='flex flex-col gap-2'>
             <h3 className="dark:text-white font-bold text-grayText">Title</h3>
