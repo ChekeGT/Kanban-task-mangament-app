@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 
-export default function TitleInput({value, setValue, column, setFormErrors, submissionFailed}){
+export default function TitleInput({value, setValue, column, setFormErrors, submissionFailed, originalTaskName = null}){
     
     const [error, setError] = useState('')
+
 
     const checkForErrors = (value) => {
         let err = ''
@@ -11,7 +12,7 @@ export default function TitleInput({value, setValue, column, setFormErrors, subm
         }
         if (column){
             column.tasks.forEach((task) => {
-                if (task.name == value){
+                if (value == task.title && value != originalTaskName){
                     err = "This task name is already in use."
                 }
             })
@@ -42,7 +43,7 @@ export default function TitleInput({value, setValue, column, setFormErrors, subm
         <div className='flex flex-col gap-2'>
             <h3 className="dark:text-white font-bold text-grayText">Title</h3>
             <div className="relative">
-                <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error ? ' border-2 border-mainRed' : ''}`} value={value} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
+                <input className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${error && submissionFailed ? ' border-2 border-mainRed' : ''}`} value={value} onChange={handleChange} placeholder="e.g. Take coffee break" type="text" />
                 {
                                 error && submissionFailed ?
                                 <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">

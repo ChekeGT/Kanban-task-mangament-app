@@ -6,7 +6,7 @@ import { useDispatch } from "../../App";
 import HamburgerButton from "../Utilities/HamburgerButton";
 import PopUpContainer from "./PopUpContainer";
 import GeneralDeletePopUp from "./GeneralDeletePopUp";
-import AddTask from "./Task/Add/AddTask";
+import EditTask from "./Task/Add/AddOrEditTask";
 
 function SubTask({ title, isCompleted, updateStatus }) {
 
@@ -139,7 +139,7 @@ export default function ViewTask({task, column, board}) {
         return (
             <PopUpContainer autoDestructionFunction={toggleShowEditPopup}>
                 {/* We will later on edit the add task popup to support edition. */}
-                <AddTask board={board} columns={board.columns}></AddTask>
+                <EditTask board={board} columns={board.columns} task={task} column={column} type={'edit'}></EditTask>
             </PopUpContainer>
         )
     }

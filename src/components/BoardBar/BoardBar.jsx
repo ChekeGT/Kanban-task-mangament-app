@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AddNewTaskButton from "./AddNewTaskButton"
 import HamburgerButton from "../Utilities/HamburgerButton"
-import AddTask from "../PopUps/Task/Add/AddTask"
+import AddTask from "../PopUps/Task/Add/AddOrEditTask"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import { ACTIONS  } from "../../state_management/actions"
 import AddOrEditBoard from '../PopUps/Board/AddOrEdit/AddOrEditBoard'

@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react"
 
-export default function SelectColumn({columns, value, setValue, setFormErrors, submissionFailed}){
+export default function SelectColumn({columns, value, setValue, setFormErrors, submissionFailed, currentTitle, originalColumn, type}){
 
     const NO_COLUMN_SELECTED = 'No column selected'
 
     const [error, setError] = useState('')
+
+    useEffect(() => {
+        checkForErrors(value)
+    }, [currentTitle])
 
     function checkForErrors(value){
         let error = ''
         if (value == NO_COLUMN_SELECTED){
             error = 'Please select a column.'
         }
+        columns.forEach((column) => {
+            if (column.name == value && (originalColumn != column)){
+                column.tasks.forEach((task) => {
+                    if (task.title == currentTitle){
+                        error = 'The column you have selected already has a task named like this. Please rename the task or select another column.'
+                    }
+                })
+            }
+        })
 
         if (error){
             setError(error)
