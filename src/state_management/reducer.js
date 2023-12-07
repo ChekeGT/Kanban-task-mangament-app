@@ -202,6 +202,53 @@ export default function reducer(state, action){
             newState = {...state, boards: newBoards, currentBoard: currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
+        case ACTIONS.editTask:
+            
+
+            newBoards = boards.map((board) => {
+                if ((board.name == action.payload.board.name)){
+                    const editedTask = {
+                        title: action.payload.title,
+                        description: action.payload.description,
+                        subtasks: action.payload.subtasks
+                    }
+                    const shouldMoveTaskToAnotherColumn = action.payload.column.name != action.payload.newColumn
+                    board.columns = board.columns.map((column) => {
+                        if (shouldMoveTaskToAnotherColumn){
+                            if (column.name == action.payload.column.name){
+                                column.tasks = column.tasks.filter((task) => task.title != action.payload.task.title)
+                            }
+                            if (column.name == action.payload.newColumn){
+                                let shouldAddNewTask = true
+                                column.tasks.forEach((task) => {
+                                    if (task.title == action.payload.title){
+                                        shouldAddNewTask = false
+                                    }
+                                })
+                                if (shouldAddNewTask){
+                                    column.tasks.push(editedTask)
+                                }
+                            }
+                        }else{
+                            if (column.name == action.payload.newColumn){
+                                column.tasks = column.tasks.map((task) => {
+                                    if (task.title == action.payload.task.title){
+                                        return editedTask
+                                    }
+                                    return task
+                                })
+                                
+                            }
+                        }
+                        return column
+                    })
+                    currentBoard = board
+                }
+                return board
+            })
+            newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            localStorage.state = JSON.stringify(newState)
+            return newState
         default:
             return state
     }

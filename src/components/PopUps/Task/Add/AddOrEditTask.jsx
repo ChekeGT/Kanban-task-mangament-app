@@ -158,6 +158,37 @@ export default function AddOrEditTask({ board, columns, task = null, column = nu
     
     function editTaskInStore(){
 
+        const getSubTaskByOriginalTitle = (title) => {
+            for (let i = 0; i < task.subtasks.length; i++){
+                const subtask = task.subtasks[i]
+                if (subtask.title == title){
+                    return subtask
+                }
+            }
+        }
+        
+        const action = {
+            type: ACTIONS.editTask,
+            payload: {
+                board: board,
+                column: column,
+                task: task,
+                title: title,
+                description: description,
+                subtasks: subTasks.map((subtask) => {
+                    const originalSubtaskTitle = getOriginalSubTaskTitle(subtask)
+                    if (originalSubtaskTitle){
+                        let originalSubtask = getSubTaskByOriginalTitle(originalSubtaskTitle)
+                        originalSubtask.title = subtask[0]
+                        return originalSubtask
+                    }
+                    return {title: subtask[0], isCompleted: false}
+                }),
+                newColumn: selectedColumn,
+                
+            }
+        }
+        dispatch(action)
     }
     
     
@@ -193,7 +224,7 @@ export default function AddOrEditTask({ board, columns, task = null, column = nu
                 <button onClick={addNewSubTask} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Subtask</button>
             </div>
             <SelectColumn columns={columns} value={selectedColumn} setValue={setSelectedColumn} setFormErrors={setSelectedColumnErrors} submissionFailed={submissionFailed} currentTitle={title} originalColumn={type == 'edit' ? column : null} type={type == 'edit' ? 'edit' : 'add'}/>
-            <button onClick={hanldeSubmit} className="bg-mainPurple p-2 rounded-full text-white font-semibold">Create Task</button>
+            <button onClick={hanldeSubmit} className="bg-mainPurple p-2 rounded-full text-white font-semibold">{type == 'edit' ? 'Save Changes' : 'Create Task'}</button>
         </form>
         )
 }
