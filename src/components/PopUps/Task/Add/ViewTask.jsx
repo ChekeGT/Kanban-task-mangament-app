@@ -134,7 +134,6 @@ export default function ViewTask({task, column, board}) {
     if (showEditPopUp){
         return (
             <PopUpContainer autoDestructionFunction={toggleShowEditPopup}>
-                {/* We will later on edit the add task popup to support edition. */}
                 <EditTask board={board} columns={board.columns} task={task} column={column} type={'edit'}></EditTask>
             </PopUpContainer>
         )
@@ -157,9 +156,9 @@ export default function ViewTask({task, column, board}) {
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white">Current Column</h3>
                 {currentColumnError ? <p className="text-mainRed text-sm">{currentColumnError}</p> : <></>}
-                <select onChange={handleSelectedColumnChange} value={currentColumn} className="dark:bg-darkGrey dark:text-white w-full p-2 rounded-md border border-mainPurple" name="" id="">
+                <select onChange={handleSelectedColumnChange} value={currentColumn} className="dark:bg-darkGrey dark:text-white w-full p-2 rounded-md border active:border-mainPurple hover:border-mainPurple bg-white" name="" id="">
                     {
-                        board.columns.map((column) => <option key={column.name} value={column.name}>{column.name}</option>)
+                        board.columns.map((column) => <option key={column.name} value={column.name} className="text-mediumGrey">{column.name}</option>)
                     } 
                 </select>
             </div>

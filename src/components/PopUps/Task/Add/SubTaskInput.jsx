@@ -26,7 +26,7 @@ export default function SubTaskInput({ subTasks, value, setValue, autoDestructio
     return (
             <div className="flex items-center gap-4">
                 <div className="relative w-[100%]">
-                    <input className={`dark:bg-darkGrey w-full p-2 rounded-md ${error && submissionFailed ? ' border-2 border-mainRed' : 'border border-gray'}`} placeholder='idk' onChange={handleChange} value={value} type="text" />
+                    <input className={`dark:bg-darkGrey w-full p-2 rounded-md dark:text-white ${error && submissionFailed ? ' border-2 border-mainRed' : 'border border-gray'}`} placeholder='idk' onChange={handleChange} value={value} type="text" />
                     {
                             error && submissionFailed ?
                                 <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">

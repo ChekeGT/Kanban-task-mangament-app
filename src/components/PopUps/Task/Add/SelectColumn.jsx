@@ -58,8 +58,8 @@ export default function SelectColumn({columns, value, setValue, setFormErrors, s
                         : ''
                     }
                 </div>
-                    <select onChange={handleChange} value={value} className={`dark:bg-darkGrey w-full p-2 rounded-md border ${error && submissionFailed ? ' border-mainRed' : 'border-gray'}`} name="" id="">
-                        {columns.map((column) => (<option key={column.name}>{column.name}</option>))}
+                    <select onChange={handleChange} value={value} className={`dark:bg-darkGrey w-full p-2 rounded-md border dark:text-white bg-white active:border-mainPurple hover:border-mainPurple ${error && submissionFailed ? ' border-mainRed' : 'border-gray'}`} name="" id="">
+                        {columns.map((column) => (<option key={column.name} className="dark:text-mediumGrey">{column.name}</option>))}
                         <option disabled hidden>{NO_COLUMN_SELECTED}</option>
                     </select>
         </div>
