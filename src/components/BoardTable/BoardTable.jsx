@@ -60,7 +60,7 @@ export default function BoardTable({ board }) {
   
   
     return (
-      <div className="flex gap-8 pl-6 pt-[120px] h-[100%] min-h-screen">
+      <div className="flex flex-row gap-8 pl-6 pt-[120px] h-[100%] min-h-screen">
         { showEditBoardPopUp ?<EditBoardPopUp autoDestructionFunction={toggleShowEditBoardPopUp} board={board}/> : <></> }
         {columns.map((column) => (
           <Column
@@ -69,7 +69,7 @@ export default function BoardTable({ board }) {
             column={column}
           />
         ))}
-        <button onClick={toggleShowEditBoardPopUp} className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer p-4 mt-10">
+        <button onClick={toggleShowEditBoardPopUp} className="dark:bg-darkGrey flex items-center font-bold text-grayText bg-lightWhite cursor-pointer mt-3 mb-3 px-4 rounded-xl">
           <h1>+ New Column</h1>
         </button>
       </div>
