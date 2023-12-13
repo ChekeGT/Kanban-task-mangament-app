@@ -116,7 +116,7 @@ export default function reducer(state, action){
                         const { name } = column
                         if (column.originalName){
                             const originalColumn = getColumnByName(action.payload.originalName, column.originalName)
-                            column = originalColumn == undefined ? getColumnByName(action.payload.originalName, name) : originalColumn
+                            column = originalColumn == undefined ? getColumnByName(action.payload.editedName, name) : originalColumn
                             column.name = name                
                         }
                         return column
@@ -125,7 +125,7 @@ export default function reducer(state, action){
                 }
                 return board    
             })
-            newState = {...state, boards: newBoards, currentBoard: currentBoard}
+            newState = {...state, boards: newBoards, currentBoard: currentBoard == undefined ? state.currentBoard : currentBoard}
             localStorage.state = JSON.stringify(newState)
             return newState
         case ACTIONS.updateSubtaskCheckedStatus:
