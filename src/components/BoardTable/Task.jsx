@@ -1,6 +1,6 @@
 import { useState } from "react"
 import PopUpContainer from "../PopUps/PopUpContainer"
-import ViewTask from '../PopUps/ViewTask'
+import ViewTask from '../PopUps/Task/Add/ViewTask'
 
 export default function Task({task, column, board}) {
     

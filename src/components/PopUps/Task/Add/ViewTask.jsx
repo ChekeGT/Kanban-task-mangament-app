@@ -1,25 +1,21 @@
 import { useState } from "react";
-import { ACTIONS } from "../../state_management/actions";
-import { TYPES } from "../Utilities/types";
+import { ACTIONS } from "../../../../state_management/actions";
+import { TYPES } from "../../../Utilities/types";
 
-import { useDispatch } from "../../App";
-import HamburgerButton from "../Utilities/HamburgerButton";
-import PopUpContainer from "./PopUpContainer";
-import GeneralDeletePopUp from "./GeneralDeletePopUp";
-import EditTask from "./Task/Add/AddOrEditTask";
+import { useDispatch } from "../../../../App";
+import HamburgerButton from "../../../Utilities/HamburgerButton";
+import PopUpContainer from "../../PopUpContainer";
+import GeneralDeletePopUp from "../../GeneralDeletePopUp";
+import EditTask from "./AddOrEditTask";
 
 function SubTask({ title, isCompleted, updateStatus }) {
 
-
-    const [isChecked, setIsChecked] = useState(isCompleted);
-
-
     return(
-        <div className={`${ isCompleted ? 'dark:bg-veryDarkGrey' : ''} flex p-2 pl-4 gap-4 hover:bg-mainPurple hover:bg-opacity-30 `}>
-            <input  checked={isCompleted}
-        onChange={() => updateStatus(!isCompleted)} id="subTasks" className="checked:line-through" type="checkbox" />
+        <div className={` dark:bg-veryDarkGrey flex p-2 pl-4 gap-4 hover:bg-mainPurple dark:hover:bg-opacity-50 dark:hover:bg-mainPurple hover:bg-opacity-30 rounded-md bg-lightGrey font-semibold items-center text-center`}>
+            <input  checked={isCompleted} 
+        onChange={() => updateStatus(!isCompleted)} id="subTasks" className={`checked:line-through accent-mainPurple dark:bg-green ${!isCompleted ? 'dark:invert dark:brightness-75' : ''}`} type="checkbox" />
              <label
-                htmlFor="subTasks" className={`dark:text-white cursor-pointer ${isChecked ?'line-through opacity-50' : ''}`}
+                htmlFor="subTasks" className={`dark:text-white cursor-pointer ${isCompleted ?'line-through opacity-50' : ''}`}
 >
                 {title}
             </label>

@@ -17,7 +17,8 @@ export default {
         lightWhite: '#E9EFFA',
         veryDarkGrey: '#20212C',
         darkGrey: '#2B2C37',
-        blackCover: '#00000066'
+        blackCover: '#00000066',
+        lightGrey: '#f4f7fd'
       },
       fontFamily: {
         custom: ['Plus Jakarta Sans', 'serif']
