@@ -1,8 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CrossIcon from "../../../Utilities/CrossIcon";
 
-export default function ColumnInput({index, value, setColumnValue, deleteColumn, submissionErrors}){
+export function detectColumnError(columns, column) {
+    let err = ''
+    columns.forEach((comparativeColumn) => {
+        if (column[1] != comparativeColumn[1] && column[0] == comparativeColumn[0]){
+            err = 'You can not repeat column names.'
+        }
+    })
+
+    if (column[0] == ''){
+        err = 'Your column name must not be empty.'
+    }
+    return err
+}
+export default function ColumnInput({index, column, columns, setColumnValue, deleteColumn, submissionErrors, }){
     
+    const value = column[0]
     const [showInput, setShowInput ] = useState(true)
+    const [error, setError ] = useState('')
+
+    useEffect(() => {
+        if (submissionErrors){
+            setError(detectColumnError(columns, column))
+        }
+    }, [column, columns, submissionErrors])
 
     const handleChange = (e) => {
         setColumnValue(index, e.target.value)
@@ -16,18 +38,16 @@ export default function ColumnInput({index, value, setColumnValue, deleteColumn,
         return(
             <div className="flex items-center gap-4">
                 <div className="w-full relative">
-                    <input placeholder="e.g. Make Coffe" className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${(submissionErrors && value == '')? ' border-2 border-mainRed' : ''}`} type="text" value={value} onChange={handleChange}/>
+                    <input placeholder="e.g. Make Coffe" className={`dark:bg-darkGrey w-full p-2 rounded-md  border border-gray ${(submissionErrors && error)? ' border-2 border-mainRed' : ''}`} type="text" value={value} onChange={handleChange}/>
                     {
-                    (submissionErrors && value == '') ?
+                    (submissionErrors && error) ?
                     <div className="absolute top-0 right-0 h-[100%] flex items-center mr-4 text-center">
-                        <p className=" text-mainRed text-sm">Can't Be Empty</p>
+                        <p className=" text-mainRed text-sm">{error}</p>
                     </div>
-                    : ''
+                    : <></>
                     }
                 </div>
-                <button onClick={autoDestroy}>
-                <svg className={`${(submissionErrors && value == '') ? 'fill-mainRed' : 'fill-grayText'}`} width="15" height="15" xmlns="http://www.w3.org/2000/svg"><g fillRule="evenodd"><path d="m12.728 0 2.122 2.122L2.122 14.85 0 12.728z"/><path d="M0 2.122 2.122 0 14.85 12.728l-2.122 2.122z"/></g></svg>
-                </button>
+                <CrossIcon color={error ? '#EA5555' : '#828fa3'} deleteFunction={autoDestroy}/>
             </div>
         )
     }else{

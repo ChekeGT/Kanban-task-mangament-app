@@ -146,7 +146,7 @@ export default function ViewTask({task, column, board}) {
             </div>
             <p className=" text-grayText">{task.description}</p>
             <div> 
-                <h3 className="dark:text-white">Subtasks ({completedSubtasks} of {numberOfSubtasks})</h3>
+                <h3 className="dark:text-white text-mediumGrey">Subtasks ({completedSubtasks} of {numberOfSubtasks})</h3>
                 <div className="flex flex-col gap-2 pt-2">
                     {
                         task.subtasks.map((subtask, i) => <SubTask key={i} title={subtask.title} isCompleted={subtask.isCompleted} updateStatus={getUpdateSubtaskCheckedStatusFunction(subtask)}></SubTask>)

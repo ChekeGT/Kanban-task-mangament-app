@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import ColumnInput from "./ColumnInput"
+import { detectColumnError } from "./ColumnInput"
 
 // Context
 import { useAutoDestruction } from "../../PopUpContainer"
@@ -21,6 +22,7 @@ export default function AddOrEditBoard({ type, board = null }) {
 
 
     const [boardName, setBoardName ] = useState('')
+    const [boardNameError, setBoardNameError ] = useState('')
 
     // Used to detect errors during the submission.
     
@@ -88,35 +90,38 @@ export default function AddOrEditBoard({ type, board = null }) {
         setColumns(columnsCopy)
     }
 
-    const boardNameAlreadyUsed = (boardName) => {
+    
+
+    const detectBoardNameError = (boardName) => {
+        let error = ''
         for (let i = 0; i < boards.length; i++){
             let currentBoard = boards[i]
             if ((currentBoard.name == boardName && board == null ) || ( currentBoard.name == boardName && boardName != board.name )){
+                error = 'This board name is currently in use.'
+            }
+        }
+
+        if (boardName == ''){
+            error = 'Board name must not be empty.'
+        }
+        setBoardNameError(error)
+        return error == '' ? false : true
+    }
+
+    useEffect(() => {
+        detectBoardNameError(boardName)
+    }, [boardName])
+
+    const detectColumnsErrors = (columns) => {
+        for (let i = 0; i < columns.length; i++){
+            const column = columns[i]
+            if (detectColumnError(columns, column)){
                 return true
             }
         }
+        return false
     }
-    const detectSubmissionErrors = (boardName, columns) => {
-        let errors = false
-        columns.forEach((column, i) => {
-            if (column[0] == ''){
-                errors = true
-            }
-            for (let j = i + 1; j < columns.length; j++){
-                const comparativeColumn = columns[j]
-                if (column[0] == comparativeColumn[0]){
-                    errors = true
-                }
-            }
-        })
-        if (boardName == ''){
-            errors = true
-        }
-        if (boardNameAlreadyUsed(boardName)){
-            errors = true
-        }
-        return errors
-    }
+    const detectSubmissionErrors = (boardName, columns) => detectBoardNameError(boardName) || detectColumnsErrors(columns)
 
     const formatColumnsToStoreData = (columns) => {
         return columns.map((column, index) => {
@@ -184,12 +189,12 @@ export default function AddOrEditBoard({ type, board = null }) {
             <h1 className="dark:text-white font-bold text-xl ">{type == TYPES.add ? 'Add New Board' : 'Edit Board'}</h1>
             <div className="flex flex-col gap-2 dark:text-white">
                 <h3 className="dark:text-white font-bold text-grayText">{type == TYPES.edit ? 'Board ' : ''}Name</h3>
-                <NameInput boardName={boardName} submissionErrors={submissionErrors} handleBoardNameChange={handleBoardNameChange} usedBoardName={boardNameAlreadyUsed(boardName)}/>
+                <NameInput boardName={boardName} submissionErrors={submissionErrors} handleBoardNameChange={handleBoardNameChange} error={boardNameError}/>
             </div>
             <div className="flex flex-col gap-4">
                 <h3 className="dark:text-white font-bold text-grayText">Columns</h3>
                 <div className="pb-6 flex flex-col gap-2 dark:text-white">
-                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} value={column[0]} setColumnValue={setColumnValue} deleteColumn={deleteColumn} submissionErrors={submissionErrors}/>)}
+                    {columns.map( (column, i) => <ColumnInput key={column[1]} index={i} column={column} columns={columns} setColumnValue={setColumnValue} deleteColumn={deleteColumn} submissionErrors={submissionErrors}/>)}
                 </div>
                 <div className="flex flex-col gap-4">
                     <button  onClick={addNewColumn} className="dark:bg-white bg-mainPurple bg-opacity-10 p-2 text-mainPurple font-bold rounded-full">+ Add New Column</button>
