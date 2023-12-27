@@ -3,6 +3,9 @@ import { useDispatch } from "../../App"
 import { THEMES } from "../../state_management/themes"
 import { ACTIONS } from "../../state_management/actions"
 
+import iconLightTheme from "../../assets/icon-light-theme.svg"
+import iconDarkTheme from "../../assets/icon-dark-theme.svg"
+
 
 export default function ThemeToggler({theme}){
     let dispatch = useDispatch()
@@ -32,12 +35,12 @@ export default function ThemeToggler({theme}){
 
     return (
         <div className="flex flex-row w-full justify-evenly mx-auto bg-grayBackground items-center py-2 rounded-md dark:bg-veryDarkGrey">
-            <img className=" w-[18px] h-[18px]" src="./src/assets/icon-light-theme.svg"/>
+            <img className=" w-[18px] h-[18px]" src={iconLightTheme}/>
             <label className="switch">
                 <input className="toggle"  type="checkbox" onChange={handleToggle} value={checked} />
                 <span className={`slider rounded-full before:rounded-full ${checked ? 'before:translate-x-5' : ''}`}></span>
             </label>
-            <img className=" w-[18px] h-[18px]" src="./src/assets/icon-dark-theme.svg"/>
+            <img className=" w-[18px] h-[18px]" src={iconDarkTheme}/>
         </div>
     )
 

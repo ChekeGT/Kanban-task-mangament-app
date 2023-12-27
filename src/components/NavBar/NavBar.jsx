@@ -10,6 +10,10 @@ import AddOrEditBoard from "../PopUps/Board/AddOrEdit/AddOrEditBoard"
 import PopUpContainer from "../PopUps/PopUpContainer"
 import { TYPES } from "../PopUps/Board/AddOrEdit/types"
 
+// Logos
+import darkLogo from "../../assets/logo-dark.svg"
+import lightLogo from "../../assets/logo-light.svg"
+
 
 function MobileViewAddOrEditBoard({toggleShowPopUp}){
     return (
@@ -58,7 +62,7 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
                     }
                     <div className=' hidden md:flex flex-col md:min-h-screen justify-between bg-white shadow md:w-full py-2 font-custom dark:bg-darkGrey pr-3'>
                         <div className="flex flex-col gap-4 w-full mt-2">
-                            <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
+                            <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={theme == THEMES.light ? darkLogo : lightLogo}></img>
                             <div className="flex flex-col gap-3">
                                 <p className=" text-xl text-grayText font-extrabold ml-4">All boards ({boards.length})</p>
                                 {boards.map((board) => {
@@ -95,7 +99,7 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
             <header className='w-2/12 h-[96px] bg-white dark:bg-darkGrey shadow absolute'>
                 <nav className='w-full h-full'>
                     <div className='w-full h-full flex justify-center items-center'>
-                        <img className="w-[152.53px] h-[25.22px]" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
+                        <img className="w-[152.53px] h-[25.22px]" src={theme == THEMES.light ? darkLogo : lightLogo}></img>
                     </div>
                 </nav>
             </header>

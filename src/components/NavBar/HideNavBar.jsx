@@ -1,9 +1,10 @@
+import iconHideSideBar from "../../assets/icon-hide-sidebar.svg"
 
 export default function HideNavBar({handleToggleNavBar, showNavBar}){
     if (showNavBar){
         return (
             <button className="flex flex-row items-center gap-2 " onClick={handleToggleNavBar}>
-                <img className="w-[18px] h-[18px]" src="./src/assets/icon-hide-sidebar.svg"/>
+                <img className="w-[18px] h-[18px]" src={iconHideSideBar}/>
                 <p className=" text-grayText font-extrabold">Hide Sidebar</p>
             </button>
         )
