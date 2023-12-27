@@ -20,12 +20,12 @@ export default function BoardTable({ board }) {
 
     const toggleShowAddBoardPopUp = () => {updateShowAddPopUp(!showAddPopUp)}
     return (
-      <div className="flex gap-8 pl-6 pt-[120px] h-[100%] min-h-screen justify-center items-center">
+      <div className=" overflow-x-auto whitespace-nowrap flex gap-8 pl-6 pt-[120px] h-[100%] min-h-screen justify-center items-center">
         {showAddPopUp ? <PopUpContainer autoDestructionFunction={toggleShowAddBoardPopUp}><AddOrEditBoard type={TYPES.add}/></PopUpContainer> : <></>}
-        <div className="flex gap-4 flex-col items-center">
-          <h1 className="text-grayText font-bold text-xl">
-            This board is empty. Select a Board or Create a new one to get started.
-          </h1>
+        <div className="flex gap-4 flex-col items-center text-center">
+          <p className="text-grayText font-bold text-sm md:text-xl whitespace-pre-wrap">
+            Select a Board or Create a new one to get started.
+          </p>
           <button onClick={toggleShowAddBoardPopUp} className="bg-mainPurple p-2 px-4 rounded-full text-white font-semibold">
             + Create New Board.
           </button>
@@ -43,12 +43,12 @@ export default function BoardTable({ board }) {
   }
   if (columns.length === 0) {
     return (
-      <div className="flex gap-8  pl-6 pt-[120px] h-[100%] min-h-screen justify-center items-center">
+      <div className=" overflow-x-auto whitespace-nowrap flex gap-8  pl-6 pt-[120px] h-[100%] min-h-screen justify-center items-center">
         { showEditBoardPopUp ?<EditBoardPopUp autoDestructionFunction={toggleShowEditBoardPopUp} board={board}/> : <></> }
         <div className="flex gap-4 flex-col items-center">
-          <h1 className="text-grayText font-bold">
+          <p className="text-grayText font-bold text-sm md:text-xl whitespace-pre-wrap">
             This board is empty. Create a new column to get started.
-          </h1>
+          </p>
           <button onClick={toggleShowEditBoardPopUp} className="bg-mainPurple p-2 px-4 rounded-full text-white font-semibold">
             + Add New Column
           </button>
@@ -60,7 +60,7 @@ export default function BoardTable({ board }) {
   
   
     return (
-      <div className="flex flex-row gap-8 pl-6 pt-[120px] h-[100%] min-h-screen">
+      <div className=" overflow-x-auto whitespace-nowrap flex flex-row gap-8 pl-6 pt-[120px] h-[100%] min-h-screen">
         { showEditBoardPopUp ?<EditBoardPopUp autoDestructionFunction={toggleShowEditBoardPopUp} board={board}/> : <></> }
         {columns.map((column) => (
           <Column
