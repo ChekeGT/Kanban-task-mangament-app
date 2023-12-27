@@ -19,7 +19,9 @@ export default function PopUpContainer({ children, autoDestructionFunction}){
         // why? because on the children of this function it exists a stop propagation function.
         <autoDestructionContext.Provider value={autoDestructionFunction}>
             <div  onClick={handleClick} className="bg-blackCover absolute w-11 h-12 left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%] w-[100%] h-[100%] flex justify-center items-center z-50">
-                {children}
+                <div className="w-[80vw] md:w-auto">    
+                    {children}
+                </div>
             </div>
         </autoDestructionContext.Provider>
     )

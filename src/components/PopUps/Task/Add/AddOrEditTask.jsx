@@ -207,7 +207,7 @@ export default function AddOrEditTask({ board, columns, task = null, column = nu
     }
     
     return(
-        <form onClick={preventPropagation} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
+        <form onClick={preventPropagation} className="dark:bg-darkGrey max-w-full w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="dark:text-white font-bold text-xl">{type == 'edit' ? 'Edit' : 'Add New'} Task</h1>
             <TitleInput value={title} setValue={setTitle} column={getColumnByColumnName(selectedColumn, columns)} setFormErrors={setTitleErrors} submissionFailed={submissionFailed} originalTaskName={type == 'edit' ? task.title : null}/>
             <DescriptionInput value={description} setValue={setDescription} setFormErrors={setDescriptionErrors} submissionFailed={submissionFailed}/>

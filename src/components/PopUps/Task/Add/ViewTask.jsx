@@ -139,7 +139,7 @@ export default function ViewTask({task, column, board}) {
         )
     }
     return(
-        <div  onClick={preventPropagation} className="dark:bg-darkGrey flex flex-col gap-5 bg-white w-[480px] p-6">
+        <div  onClick={preventPropagation} className="dark:bg-darkGrey max-w-full flex flex-col gap-5 bg-white w-[480px] p-6">
             <div className="flex flex-row gap-2 items-center justify-between">
                 <h1 className="dark:text-white font-bold text-xl">{task.title}</h1>
                 <HamburgerButton handleShowEditPopUp={toggleShowEditPopup} handleShowDeletePopUp={toggleShowDeletePopUp} showOptions={showOptions} toggleShowOptions={toggleShowOptions} active={true} type={'task'}></HamburgerButton>

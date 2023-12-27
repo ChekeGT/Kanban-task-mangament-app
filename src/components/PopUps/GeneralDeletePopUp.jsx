@@ -35,7 +35,7 @@ export default function GeneralDeletePopUp({action, type, name}) {
     
     return(
         
-        <div onClick={preventPropagation} className="bg-white w-[480px] p-8 flex flex-col gap-5">
+        <div onClick={preventPropagation} className="bg-white max-w-full w-[480px] p-8 flex flex-col gap-5">
             <h1 className="font-bold text-xl text-mainRed">Delete this {type}?</h1>
             <p className="text-grayText">{deleteMsg}</p>
             <div className="w-full flex gap-4 ">
