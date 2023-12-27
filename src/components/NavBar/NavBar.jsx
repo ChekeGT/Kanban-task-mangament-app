@@ -46,7 +46,7 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
 
     if (showNavBar){
         return(
-            <header className=' w-0 h-0 md:w-[19.8%]'>
+            <header className=' w-0 h-0 md:w-[34%]'>
                 <nav>
                     {showMobileView && !showCreateBoardPopUp ? 
                     <div className='absolute w-[100vw] flex justify-center items-center top-[112px] md:hidden shadow-xl translate-x-[-50%] left-[50%]' onClick={preventPropagation}>
@@ -96,7 +96,7 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
     }else{
         return (
             <>
-            <header className='w-2/12 h-[96px] bg-white dark:bg-darkGrey shadow absolute'>
+            <header className='md:w-3/12 xl:w-2/12 h-[96px] bg-white dark:bg-darkGrey shadow absolute'>
                 <nav className='w-full h-full'>
                     <div className='w-full h-full flex justify-center items-center'>
                         <img className="w-[152.53px] h-[25.22px]" src={theme == THEMES.light ? darkLogo : lightLogo}></img>

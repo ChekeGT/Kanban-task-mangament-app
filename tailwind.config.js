@@ -24,6 +24,9 @@ export default {
       fontFamily: {
         custom: ['Plus Jakarta Sans', 'serif']
       },
+      gridTemplateColumns:{
+        'createNewBoard': '1fr 20fr'
+      }
     },
     darkSelector: '.dark-mode'
   },
