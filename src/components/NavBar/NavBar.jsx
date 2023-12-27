@@ -63,7 +63,7 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
                     <div className=' hidden md:flex flex-col md:min-h-screen justify-between bg-white shadow md:w-full py-2 font-custom dark:bg-darkGrey pr-3'>
                         <div className="flex flex-col gap-4 w-full mt-2">
                             <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={theme == THEMES.light ? darkLogo : lightLogo}></img>
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-3 overflow-y-auto whitespace-nowrap max-h-[50vh]">
                                 <p className=" text-xl text-grayText font-extrabold ml-4">All boards ({boards.length})</p>
                                 {boards.map((board) => {
                                     return (
