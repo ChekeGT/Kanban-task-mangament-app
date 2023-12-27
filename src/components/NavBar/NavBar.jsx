@@ -6,36 +6,69 @@ import CreateNewBoardButton from "./CreateNewBoardButton.jsx"
 import { THEMES } from '../../state_management/themes.js'
 import { useState } from 'react'
 
+import AddOrEditBoard from "../PopUps/Board/AddOrEdit/AddOrEditBoard"
+import PopUpContainer from "../PopUps/PopUpContainer"
+import { TYPES } from "../PopUps/Board/AddOrEdit/types"
 
 
-export default function NavBar({boards, theme, currentBoard}){
+
+
+export default function NavBar({boards, theme, currentBoard, showMobileView=false}){
     const [showNavBar, setShowNavBar ] = useState(true)
+
+    const [showCreateBoardPopUp, setShowCreateBoardPopup ] = useState(false)
+
+    function toggleShowCreateBoardPopUp(){
+        setShowCreateBoardPopup(!showCreateBoardPopUp)
+    }
 
     const toggleShowNavBar = () => {
         setShowNavBar(!showNavBar)
     }
 
+    function preventPropagation(e){
+        e.preventPropagation()
+    }
+
     if (showNavBar){
         return(
-            <header className='w-[19.8%]'>
-                <nav className=" flex flex-col min-h-screen justify-between bg-white shadow w-full py-2 font-custom dark:bg-darkGrey pr-3" >
-                    <div className="flex flex-col gap-4 w-full mt-2">
-                        <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
-                        <div className="flex flex-col gap-3">
-                            <p className=" text-xl text-grayText font-extrabold ml-4">All boards ({boards.length})</p>
-                            {boards.map((board) => {
-                                return (
-                                    <BoardComponent key={board.name} board={board} currentBoard={currentBoard == null ? '' : board.name == currentBoard.name ? true : false}/>
-                                )
-                            })}
-                            <CreateNewBoardButton/>
+            <header className=' w-0 h-0 md:w-[19.8%]'>
+                <nav>
+                    {showMobileView ? 
+                    <div className='absolute w-[100vw] flex justify-center items-center top-[112px] md:hidden shadow-xl translate-x-[-50%] left-[50%]' onClick={preventPropagation}>
+                        <div className='w-[322px] h-[264px] bg-white dark:bg-darkGrey flex flex-col gap-3 items-start'>
+                            <p className=" mt-4 text-lg text-grayText font-extrabold ml-4">All boards ({boards.length})</p>                            
+                            {boards.map((board) => <BoardComponent key={board.name} board={board} currentBoard={currentBoard == null ? '' : board.name == currentBoard.name}></BoardComponent>)}
+                            <CreateNewBoardButton toggleShowPopUp={toggleShowCreateBoardPopUp}/>
+                            <div className=' w-9/12 mx-auto mb-2'>
+                                <ThemeToggler theme={theme}/>
+                            </div>
+                        </div>
+                    </div> : <></>
+                    }
+                    <div className=' hidden md:flex flex-col md:min-h-screen justify-between bg-white shadow md:w-full py-2 font-custom dark:bg-darkGrey pr-3'>
+                        <div className="flex flex-col gap-4 w-full mt-2">
+                            <img className="w-[152.53px] h-[25.22px] mb-7 ml-4" src={`./src/assets/logo-${theme == THEMES.light ? 'dark' : 'light'}.svg`}></img>
+                            <div className="flex flex-col gap-3">
+                                <p className=" text-xl text-grayText font-extrabold ml-4">All boards ({boards.length})</p>
+                                {boards.map((board) => {
+                                    return (
+                                        <BoardComponent key={board.name} board={board} currentBoard={currentBoard == null ? '' : board.name == currentBoard.name}/>
+                                    )
+                                })}
+                                <CreateNewBoardButton toggleShowPopUp={toggleShowCreateBoardPopUp}/>
+                            </div>
+                        </div>
+                        <div className="grid grid-rows-2 w-[90%] gap-8 mx-3">
+                            <ThemeToggler theme={theme}/>
+                            <HideNavBar showNavBar={showNavBar} handleToggleNavBar={toggleShowNavBar}/>
                         </div>
                     </div>
-                    <div className="grid grid-rows-2 w-[90%] gap-8 mx-3">
-                        <ThemeToggler theme={theme}/>
-                        <HideNavBar showNavBar={showNavBar} handleToggleNavBar={toggleShowNavBar}/>
-                    </div>
                 </nav>
+                {showCreateBoardPopUp ? 
+                <PopUpContainer autoDestructionFunction={toggleShowCreateBoardPopUp}>
+                    <AddOrEditBoard type={TYPES.add}/>
+                </PopUpContainer> : <></>}
             </header>
         )
     }else{
