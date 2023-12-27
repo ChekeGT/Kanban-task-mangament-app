@@ -11,7 +11,17 @@ import PopUpContainer from "../PopUps/PopUpContainer"
 import { TYPES } from "../PopUps/Board/AddOrEdit/types"
 
 
-
+function MobileViewAddOrEditBoard({toggleShowPopUp}){
+    return (
+        <div onClick={toggleShowPopUp} className='absolute w-full h-[96px] left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]  flex'>
+            <div className='bg-[#00000055] w-full h-full min-h-[100vh] min-w-[100vw]'>
+                <div className='h-[100vh] max-w-[90vw] left-0 right-0 mx-auto my-auto flex justify-center items-center '>
+                    <AddOrEditBoard type={TYPES.add} mobileDeletePopUpFunction={toggleShowPopUp}/>
+                </div>
+            </div>
+        </div> 
+    )
+}
 
 export default function NavBar({boards, theme, currentBoard, showMobileView=false}){
     const [showNavBar, setShowNavBar ] = useState(true)
@@ -27,16 +37,16 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
     }
 
     function preventPropagation(e){
-        e.preventPropagation()
+        e.stopPropagation()
     }
 
     if (showNavBar){
         return(
             <header className=' w-0 h-0 md:w-[19.8%]'>
                 <nav>
-                    {showMobileView ? 
+                    {showMobileView && !showCreateBoardPopUp ? 
                     <div className='absolute w-[100vw] flex justify-center items-center top-[112px] md:hidden shadow-xl translate-x-[-50%] left-[50%]' onClick={preventPropagation}>
-                        <div className='w-[322px] h-[264px] bg-white dark:bg-darkGrey flex flex-col gap-3 items-start'>
+                        <div className='w-[322px] h-[264px] overflow-y-auto whitespace-nowrap bg-white dark:bg-darkGrey flex flex-col gap-3 items-start'>
                             <p className=" mt-4 text-lg text-grayText font-extrabold ml-4">All boards ({boards.length})</p>                            
                             {boards.map((board) => <BoardComponent key={board.name} board={board} currentBoard={currentBoard == null ? '' : board.name == currentBoard.name}></BoardComponent>)}
                             <CreateNewBoardButton toggleShowPopUp={toggleShowCreateBoardPopUp}/>
@@ -65,10 +75,18 @@ export default function NavBar({boards, theme, currentBoard, showMobileView=fals
                         </div>
                     </div>
                 </nav>
-                {showCreateBoardPopUp ? 
-                <PopUpContainer autoDestructionFunction={toggleShowCreateBoardPopUp}>
-                    <AddOrEditBoard type={TYPES.add}/>
-                </PopUpContainer> : <></>}
+                <div className='md:hidden'>
+                    {showCreateBoardPopUp ? 
+                    <MobileViewAddOrEditBoard toggleShowPopUp={toggleShowCreateBoardPopUp}/>: <></> }
+                </div>
+                <div className='hidden md:block'>
+                    {
+                        showCreateBoardPopUp ? 
+                        <PopUpContainer autoDestructionFunction={toggleShowCreateBoardPopUp}>
+                            <AddOrEditBoard type={TYPES.add}/>
+                        </PopUpContainer> : <></>
+                    }
+                </div>
             </header>
         )
     }else{

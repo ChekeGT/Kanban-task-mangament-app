@@ -10,7 +10,7 @@ import { ACTIONS } from "../../../../state_management/actions"
 import NameInput from "./NameInput"
 import { TYPES } from "./types"
 
-export default function AddOrEditBoard({ type, board = null }) {
+export default function AddOrEditBoard({ type, board = null, mobileDeletePopUpFunction=null }) {
 
     // We use an array of empy strings to represent the columns.
     // Each element of this array will reactively change to have the name of the column.
@@ -28,7 +28,13 @@ export default function AddOrEditBoard({ type, board = null }) {
     
     const [submissionErrors, setSubmissionErrors ] = useState(false)
 
-    const autoDestructionFunction = useAutoDestruction()
+    let autoDestructionFunction;
+    
+    if (mobileDeletePopUpFunction){
+        autoDestructionFunction = mobileDeletePopUpFunction
+    }else{
+        autoDestructionFunction = useAutoDestruction()
+    }
 
     const boards = useBoardsContext()
     
@@ -185,7 +191,7 @@ export default function AddOrEditBoard({ type, board = null }) {
 
     }
     return(
-        <form onClick={preventPropagation} onSubmit={handleSubmit} className="dark:bg-darkGrey w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
+        <form onClick={preventPropagation} onSubmit={handleSubmit} className="dark:bg-darkGrey max-w-full w-[480px] bg-white px-6 py-8 flex flex-col gap-5">
             <h1 className="dark:text-white font-bold text-xl ">{type == TYPES.add ? 'Add New Board' : 'Edit Board'}</h1>
             <div className="flex flex-col gap-2 dark:text-white">
                 <h3 className="dark:text-white font-bold text-grayText">{type == TYPES.edit ? 'Board ' : ''}Name</h3>
